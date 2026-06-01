@@ -81,6 +81,11 @@ body {
   .print-btn, .teacher-panel, .score-header {
     display: none !important;
   }
+  /* Zusammenhängende Elemente vor Seitenumbruch schützen */
+  .aufgabe, .box, .chat-container, .sw-table-wrap, .steckbrief-box, .t-chart, .detektiv-box, .ich-kann, .ab-footer, .ab-header {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
 }
 
 /* =========================================
