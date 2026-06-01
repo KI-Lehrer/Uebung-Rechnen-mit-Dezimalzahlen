@@ -68,6 +68,7 @@ body {
   body {
     background: white !important;
     padding-bottom: 0 !important;
+    font-size: 10pt !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -81,10 +82,120 @@ body {
   .print-btn, .teacher-panel, .score-header {
     display: none !important;
   }
+  
   /* Zusammenhängende Elemente vor Seitenumbruch schützen */
   .aufgabe, .box, .chat-container, .sw-table-wrap, .steckbrief-box, .t-chart, .detektiv-box, .ich-kann, .ab-footer, .ab-header {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
+  }
+
+  /* Platzsparende Optimierungen für den A4-Ausdruck */
+  .ab-header {
+    margin-bottom: 3mm !important;
+  }
+  .ab-linie {
+    margin: 1.5mm 0 !important;
+  }
+  .ab-titel {
+    font-size: 15pt !important;
+  }
+  .ab-untertitel {
+    font-size: 8pt !important;
+  }
+  .ab-felder {
+    font-size: 8pt !important;
+    gap: 5mm !important;
+  }
+  .ab-feld {
+    width: 30mm !important;
+  }
+  
+  .aufgabe {
+    margin: 3mm 0 4mm 0 !important;
+  }
+  .aufg-kopf {
+    margin-bottom: 2mm !important;
+  }
+  .aufg-typ {
+    font-size: 10pt !important;
+  }
+  .aufg-titel {
+    font-size: 9pt !important;
+  }
+  
+  .box {
+    margin: 2mm 0 !important;
+    padding: 2mm 3mm !important;
+    font-size: 8.5pt !important;
+  }
+  
+  .exercise-row {
+    padding: 4px 8px !important;
+    margin-bottom: 4px !important;
+    font-size: 9.5pt !important;
+  }
+  
+  .math-grid {
+    gap: 8px 12px !important;
+  }
+  .sw-table-wrap {
+    margin: 6px 0 !important;
+  }
+  .sw-table th, .sw-table td {
+    padding: 5px !important;
+  }
+  .sw-table input.sw-input {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 9.5pt !important;
+  }
+  
+  .chat-container {
+    padding: 10px !important;
+    margin: 6px 0 !important;
+  }
+  .chat-bubble {
+    padding: 6px 10px !important;
+    margin-bottom: 8px !important;
+    font-size: 8.5pt !important;
+  }
+  .steckbrief-box {
+    padding: 10px !important;
+    margin: 6px 0 !important;
+    font-size: 9pt !important;
+  }
+  .steckbrief-clues {
+    margin-bottom: 8px !important;
+  }
+  .t-chart {
+    gap: 10px !important;
+    margin: 6px 0 !important;
+  }
+  .detektiv-box {
+    padding: 10px !important;
+  }
+  
+  textarea.fill-in {
+    height: 60px !important;
+    font-size: 9pt !important;
+    padding: 4px !important;
+  }
+  
+  .ich-kann {
+    margin-top: 4mm !important;
+    padding-top: 2mm !important;
+    font-size: 8pt !important;
+    gap: 3mm !important;
+  }
+  .ik-kreis {
+    width: 5mm !important;
+    height: 5mm !important;
+  }
+  
+  .ab-footer {
+    bottom: 4mm !important;
+    font-size: 7.5pt !important;
+    padding-top: 2mm !important;
   }
 }
 
