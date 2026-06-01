@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeitsblatt: Rechnen mit Dezimalzahlen (Standard)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================
+   TOKENS & RESET (Arbeitsblatt-Generator Standard)
+   ========================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --fach: #1a5fa8; /* Math Blue */
+  --c-tipp: #f0b429;
+  --c-tipp-bg: #fffbe6;
+  --correct: #27ae60;
+  --correct-bg: #eafaf1;
+  --wrong: #e74c3c;
+  --wrong-bg: #fef0f0;
+  --dark: #2c3e50;
+  --mid: #4a5568;
+  --muted: #a0aec0;
+}
+
+@page {
+  size: A4;
+  margin: 15mm 20mm 28mm 20mm;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: var(--dark);
+  line-height: 1.5;
+  font-size: 11pt;
+  background: #f7fafc;
+  padding-bottom: 80px;
+}
+
+/* =========================================
+   PAGE SYSTEM
+   ========================================= */
+.seite {
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 12mm auto;
+  padding: 15mm 20mm 28mm 20mm;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  position: relative;
+  page-break-after: always;
+}
+.seite:last-child {
+  page-break-after: auto;
+}
+
+@media screen {
+  .seite {
+    border-bottom: 2.5px dashed #cbd5e0;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    padding-bottom: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .seite {
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  .print-btn, .teacher-panel, .score-header {
+    display: none !important;
+  }
+}
+
+/* =========================================
+   HEADER STYLE ( arbeitsblatt-generator mandatory )
+   ========================================= */
+.ab-header {
+  margin-bottom: 6mm;
+  break-inside: avoid;
+}
+.ab-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3mm;
+}
+.ab-header-left {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
+.ab-icon {
+  width: 13mm;
+  height: 13mm;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--fach) 12%, white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17pt;
+}
+.ab-fach-label {
+  display: block;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--fach);
+  margin-bottom: 1mm;
+}
+.ab-titel {
+  font-family: 'Fredoka One', cursive;
+  font-size: 18pt;
+  font-weight: 900;
+  color: var(--fach);
+  margin: 0;
+  line-height: 1.1;
+}
+.ab-untertitel {
+  font-size: 9pt;
+  color: #555;
+  font-style: italic;
+  margin: 1mm 0 0 0;
+}
+.ab-niveau {
+  font-size: 8.5pt;
+  color: #718096;
+  font-weight: 700;
+  background: #edf2f7;
+  padding: 4px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.niveau-badge {
+  color: #718096;
+  font-size: 8.5pt;
+  font-weight: 700;
+}
+@media print {
+  .ab-niveau { display: none !important; }
+}
+.ab-linie {
+  border: none;
+  border-top: 2.5px solid var(--fach);
+  margin: 2mm 0;
+}
+.ab-felder {
+  display: flex;
+  gap: 10mm;
+  font-size: 9pt;
+  color: #4a5568;
+}
+.ab-feld {
+  display: inline-block;
+  width: 40mm;
+  border-bottom: 1px solid #718096;
+  margin-left: 1.5mm;
+  height: 15px;
+}
+
+/* =========================================
+   COMPONENTS: AUFGABE HEADER
+   ========================================= */
+.aufgabe {
+  margin: 5mm 0 6mm 0;
+  break-inside: avoid;
+}
+.aufg-kopf {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+  margin-bottom: 3mm;
+}
+.aufg-nr {
+  width: 7mm;
+  height: 7mm;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--fach);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 9.5pt;
+  line-height: 1;
+}
+.aufg-typ {
+  font-size: 11pt;
+  line-height: 1;
+}
+.aufg-titel {
+  font-style: italic;
+  font-size: 10pt;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* =========================================
+   BOXEN SYSTEM
+   ========================================= */
+.box {
+  display: flex;
+  align-items: flex-start;
+  gap: 3mm;
+  border-radius: 6px;
+  padding: 3mm 4mm;
+  margin: 4mm 0;
+  font-size: 9.5pt;
+  break-inside: avoid;
+}
+.box-icon {
+  font-size: 11pt;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+.box-inhalt {
+  flex: 1;
+  line-height: 1.4;
+}
+.box-tipp { background: var(--c-tipp-bg); border-left: 3px solid var(--c-tipp); }
+.box-merk { background: color-mix(in srgb, var(--fach) 8%, white); border-left: 3px solid var(--fach); }
+
+/* =========================================
+   EXERCISE LAYOUT & TABLES
+   ========================================= */
+.math-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.exercise-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Nunito', monospace;
+  font-weight: 800;
+  font-size: 11pt;
+  background: #f7fafc;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+  margin-bottom: 6px;
+}
+.exercise-row span.num {
+  color: #718096;
+  width: 20px;
+  font-size: 8pt;
+  font-family: 'Nunito', sans-serif;
+}
+input.fill-in {
+  width: 80px;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 10.5pt;
+  border: none;
+  border-bottom: 2px solid #718096;
+  background: transparent;
+  color: var(--dark);
+  outline: none;
+  padding: 0 4px;
+}
+input.fill-in:focus {
+  border-color: var(--fach);
+  background: rgba(26, 95, 168, 0.04);
+}
+input.fill-in.correct-ans {
+  border-color: var(--correct) !important;
+  color: var(--correct) !important;
+  background: var(--correct-bg) !important;
+}
+input.fill-in.wrong-ans {
+  border-color: var(--wrong) !important;
+  color: var(--wrong) !important;
+  background: var(--wrong-bg) !important;
+}
+
+/* Stellenwerttafel Grid */
+.sw-table-wrap {
+  overflow-x: auto;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e0;
+}
+.sw-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 450px;
+}
+.sw-table th, .sw-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #cbd5e0;
+}
+.sw-table th {
+  background: #edf2f7;
+  font-size: 8.5pt;
+  font-weight: 800;
+}
+.sw-table td.num-col {
+  background: #f7fafc;
+  font-weight: 800;
+  font-size: 10pt;
+}
+.sw-table input.sw-input {
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 11pt;
+  border: 1.5px solid #cbd5e0;
+  border-radius: 4px;
+  outline: none;
+}
+.sw-table input.sw-input.correct-ans {
+  border-color: var(--correct) !important;
+  background: var(--correct-bg) !important;
+  color: var(--correct) !important;
+}
+.sw-table input.sw-input.wrong-ans {
+  border-color: var(--wrong) !important;
+  background: var(--wrong-bg) !important;
+  color: var(--wrong) !important;
+}
+
+/* Text-Task Card Styles */
+.text-tasks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 8px 0;
+}
+.text-task-card {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.text-task-card p {
+  font-weight: 800;
+  font-size: 9.5pt;
+  margin-bottom: 6px;
+}
+.text-task-card p u {
+  text-decoration: underline;
+  text-decoration-color: var(--c-tipp);
+  text-decoration-thickness: 2.5px;
+}
+.text-task-card input.fill-in {
+  width: 100%;
+  text-align: left;
+}
+
+/* =========================================
+   WILD CARD: STECKBRIEF (Mystery Number)
+   ========================================= */
+.steckbrief-box {
+  background: #fdfaf2;
+  border: 2px solid var(--c-tipp);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  break-inside: avoid;
+}
+.steckbrief-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 11pt;
+  color: #c07a1a;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.steckbrief-clues {
+  font-size: 9.5pt;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.steckbrief-answer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 10.5pt;
+}
+
+/* =========================================
+   ICH KANN LEISTE
+   ========================================= */
+.ich-kann {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  margin-top: 6mm;
+  padding-top: 3mm;
+  border-top: 1px dashed #ccc;
+  font-size: 9pt;
+  color: #555;
+  break-inside: avoid;
+}
+.ich-kann-label {
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ich-kann-kreise {
+  display: flex;
+  gap: 3mm;
+}
+.ik-kreis {
+  width: 6mm;
+  height: 6mm;
+  border-radius: 50%;
+  border: 1.5px solid var(--fach);
+  display: inline-block;
+}
+.ich-kann-skala {
+  display: flex;
+  gap: 6mm;
+  font-size: 8pt;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* =========================================
+   FOOTER (CC BY-SA 4.0)
+   ========================================= */
+.ab-footer {
+  position: absolute;
+  bottom: 8mm;
+  left: 20mm;
+  right: 20mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8pt;
+  color: #718096;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 3mm;
+  break-inside: avoid;
+}
+.ab-footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* =========================================
+   FLOATING TEACHER PANEL
+   ========================================= */
+.teacher-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 42, 58, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+  align-items: center;
+}
+.teacher-panel-title {
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 8.5pt;
+  border-right: 1.5px solid rgba(255,255,255,0.2);
+  padding-right: 10px;
+  white-space: nowrap;
+}
+.btn-teacher {
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 8.5pt;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+.btn-teacher-sec { background: var(--fach); }
+.btn-teacher-pri { background: var(--wrong); }
+.btn-teacher-reset { background: #718096; }
+
+/* Solutions screen / print behaviors */
+.solutions-watermark {
+  display: none;
+  background: var(--wrong);
+  color: white;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+body.show-solutions-mode .solutions-watermark {
+  display: block;
+}
+
+@media print {
+  input.fill-in {
+    border: none !important;
+    border-bottom: 1px dashed #555 !important;
+    color: transparent !important;
+  }
+  .sw-table input.sw-input {
+    border: 1px solid #777 !important;
+    color: transparent !important;
+  }
+  
+  body.print-solutions-active input.fill-in,
+  body.show-solutions-mode input.fill-in {
+    color: #d32f2f !important;
+    font-weight: bold !important;
+    border-bottom: 1px solid #d32f2f !important;
+  }
+  body.print-solutions-active .sw-table input.sw-input,
+  body.show-solutions-mode .sw-table input.sw-input {
+    color: #d32f2f !important;
+    font-weight: bold !important;
+    border: 1px solid #d32f2f !important;
+    background: #ffebee !important;
+  }
+  body.print-solutions-active .solutions-watermark {
+    display: block !important;
+    background: #d32f2f !important;
+    color: white !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================
+     SEITE 1: DEZIMALSTELLEN & STELLENWERT
+     ========================================= -->
+<div class="seite">
+
+  <!-- Solutions Sheet Watermark Banner -->
+  <div class="solutions-watermark" id="watermark">
+    🏆 LÖSUNGSBLATT – RECHNEN MIT DEZIMALZAHLEN (STANDARD-NIVEAU) 🏆
+   <!-- Mandatory standard header -->
+  <header class="ab-header">
+    <div class="ab-header-top">
+      <div class="ab-header-left">
+        <div class="ab-icon">📐</div>
+        <div class="ab-meta">
+          <span class="ab-fach-label">MATHEMATIK · KLASSE 5</span>
+          <h1 class="ab-titel">Rechnen mit Dezimalzahlen</h1>
+          <p class="ab-untertitel">Wie helfen uns analoge Rechnungen beim Rechnen mit Kommastellen?</p>
+        </div>
+      </div>
+      <div class="ab-niveau"><span class="niveau-badge">★★☆ Standard-Version</span></div>
+    </div>
+    <hr class="ab-linie">
+    <div class="ab-felder">
+      <span>Name: <span class="ab-feld"></span></span>
+      <span>Klasse: <span class="ab-feld"></span></span>
+      <span>Datum: <span class="ab-feld"></span></span>
+    </div>
+  </header>
+
+  <!-- AUFGABE 1: STELLENWERTTAFEL -->
+  <div class="aufgabe" id="task-1">
+    <div class="aufg-kopf">
+      <span class="aufg-nr">1</span>
+      <span class="aufg-typ">🔢</span>
+      <span class="aufg-titel">Stellenwerttafel &amp; Wertziffern</span>
+    </div>
+
+    <!-- 1a) Tabelle eintragen -->
+    <div style="font-size:9.5pt; font-weight:700; color:#333; margin-bottom:6px;">a) Trage die Ziffern der Dezimalzahlen richtig ein:</div>
+    <div class="sw-table-wrap">
+      <table class="sw-table">
+        <thead>
+          <tr>
+            <th>Dezimalzahl</th>
+            <th>Z (Zehner)</th>
+            <th>E (Einer)</th>
+            <th style="color:#718096">.</th>
+            <th>z (Zehntel)</th>
+            <th>h (Hundertstel)</th>
+            <th>t (Tausendstel)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 3.05 -->
+          <tr>
+            <td class="num-col">3.05</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="" id="sw-1-z"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="3" id="sw-1-e"></td>
+            <td style="color:#718096; font-weight:800">.</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="0" id="sw-1-zh"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="5" id="sw-1-h"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="" id="sw-1-t"></td>
+          </tr>
+          <!-- 20.80 -->
+          <tr>
+            <td class="num-col">20.80</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="2" id="sw-2-z"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="0" id="sw-2-e"></td>
+            <td style="color:#718096; font-weight:800">.</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="8" id="sw-2-zh"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="0" id="sw-2-h"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="" id="sw-2-t"></td>
+          </tr>
+          <!-- 0.09 -->
+          <tr>
+            <td class="num-col">0.09</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="" id="sw-3-z"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="0" id="sw-3-e"></td>
+            <td style="color:#718096; font-weight:800">.</td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="0" id="sw-3-zh"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="9" id="sw-3-h"></td>
+            <td><input type="text" class="sw-input" maxlength="1" data-ans="" id="sw-3-t"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 1b) Wert bestimmen -->
+    <div style="font-size:9.5pt; font-weight:700; color:#333; margin:12px 0 6px 0;">b) Welchen Wert hat die unterstrichene Ziffer? (Schreibe als Stellenwert-Wort):</div>
+    <div class="text-tasks">
+      <div class="text-task-card">
+        <p>Dezimalzahl 3.0<u>5</u></p>
+        <input type="text" class="fill-in" style="width: 100%" placeholder="Antwort..." data-ans="Hundertstel" data-alt-ans="5 Hundertstel|0.05|0,05" id="val-1-1">
+      </div>
+      <div class="text-task-card">
+        <p>Dezimalzahl 2<u>0</u>.80</p>
+        <input type="text" class="fill-in" style="width: 100%" placeholder="Antwort..." data-ans="Einer" data-alt-ans="0 Einer|0" id="val-1-2">
+      </div>
+      <div class="text-task-card">
+        <p>Dezimalzahl <u>4</u>.30</p>
+        <input type="text" class="fill-in" style="width: 100%" placeholder="Antwort..." data-ans="Einer" data-alt-ans="4 Einer|4" id="val-1-3">
+      </div>
+      <div class="text-task-card">
+        <p>Dezimalzahl 0.0<u>9</u></p>
+        <input type="text" class="fill-in" style="width: 100%" placeholder="Antwort..." data-ans="Hundertstel" data-alt-ans="9 Hundertstel|0.09|0,09" id="val-1-4">
+      </div>
+    </div>
+  </div>
+
+  <!-- KREATIV WILD CARD: ZAHLEN-STECKBRIEF -->
+  <div class="aufgabe" id="task-2">
+    <div class="aufg-kopf">
+      <span class="aufg-nr">2</span>
+      <span class="aufg-typ">🧠</span>
+      <span class="aufg-titel">Mathematischer Steckbrief: Finde die gesuchte Dezimalzahl.</span>
+    </div>
+
+    <div class="steckbrief-box">
+      <div class="steckbrief-title">🕵️‍♂️ Wer bin ich?</div>
+      <div class="steckbrief-clues">
+        - Ich bin eine Dezimalzahl mit genau 2 Stellen nach dem Punkt.<br>
+        - Meine Einer-Stelle ist die Ziffer <strong>4</strong>.<br>
+        - Meine Zehntel-Stelle ist halb so gross wie meine Einer-Stelle.<br>
+        - An der Hundertstel-Stelle habe ich die Ziffer <strong>3</strong>.<br>
+        - Meine Zehner-Stelle ist <strong>0</strong>.
+      </div>
+      <div class="steckbrief-answer">
+        <span>Die gesuchte Dezimalzahl lautet:</span>
+        <input type="text" class="fill-in" style="width: 100px; font-weight:800;" data-ans="4.23" data-alt-ans="4,23" id="steckbrief-ans">
+      </div>
+    </div>
+  </div>
+
+  <!-- Ich kann Leiste am Ende von Seite 1 -->
+  <div class="ich-kann">
+    <span class="ich-kann-label">Das kann ich:</span>
+    <div class="ich-kann-kreise">
+      <span class="ik-kreis"></span>
+      <span class="ik-kreis"></span>
+      <span class="ik-kreis"></span>
+    </div>
+    <span class="ich-kann-skala">
+      <span>Stellenwerte eintragen</span>
+      <span>Zahlen-Rätsel lösen</span>
+    </span>
+  </div>
+
+  <!-- CC OER Footer -->
+  <footer class="ab-footer">
+    <span>© 2026 - Rechnen mit Dezimalzahlen (★★☆)</span>
+    <span>Lizensiert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a></span>
+  </footer>
+
+</div><!-- /seite 1 -->
+
+<!-- =========================================
+     SEITE 2: ADDITION, SUBTRAKTION & MULTIPLIKATION
+     ========================================= -->
+<div class="seite">
+
+  <!-- Solutions Sheet Watermark Banner Page 2 -->
+  <div class="solutions-watermark">
+    🏆 LÖSUNGSBLATT – RECHNEN MIT DEZIMALZAHLEN (STANDARD-NIVEAU) 🏆
+  </div>
+
+  <!-- Kopfzeile auf Seite 2 -->
+  <header class="ab-header">
+    <div class="ab-header-top">
+      <div class="ab-header-left">
+        <div class="ab-icon">📐</div>
+        <div class="ab-meta">
+          <span class="ab-fach-label">MATHEMATIK · KLASSE 5</span>
+          <h1 class="ab-titel">Rechnen mit Dezimalzahlen</h1>
+        </div>
+      </div>
+      <div class="ab-niveau"><span class="niveau-badge">★★☆ Standard-Version</span></div>
+    </div>
+    <hr class="ab-linie">
+  </header>
+
+  <!-- AUFGABE 3: ADDITION & SUBTRAKTION -->
+  <div class="aufgabe" id="task-3">
+    <div class="aufg-kopf">
+      <span class="aufg-nr">3</span>
+      <span class="aufg-typ">✏️</span>
+      <span class="aufg-titel">Plus- und Minusrechnungen mit Dezimalzahlen</span>
+    </div>
+
+    <!-- 3a) Additionen -->
+    <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">a) Plusrechnen:</div>
+    <div class="math-grid" style="margin-bottom:12px;">
+      <div class="exercise-list">
+        <div class="exercise-row"><span class="num">1.</span> 5.60 + 1.20 = <input type="text" class="fill-in" data-ans="6.80" data-alt-ans="6.8|6,80|6,8" id="add-1"></div>
+        <div class="exercise-row"><span class="num">2.</span> 0.56 + 0.12 = <input type="text" class="fill-in" data-ans="0.68" data-alt-ans="0,68" id="add-2"></div>
+        <div class="exercise-row"><span class="num">3.</span> 20.84 + 0.70 = <input type="text" class="fill-in" data-ans="21.54" data-alt-ans="21,54" id="add-3"></div>
+      </div>
+      <div class="exercise-list">
+        <div class="exercise-row"><span class="num">4.</span> 6.09 + 0.18 = <input type="text" class="fill-in" data-ans="6.27" data-alt-ans="6,27" id="add-4"></div>
+        <div class="exercise-row"><span class="num">5.</span> 0.895 + 0.006 = <input type="text" class="fill-in" data-ans="0.901" data-alt-ans="0,901" id="add-5"></div>
+        <div class="exercise-row"><span class="num">6.</span> 0.742 + 0.090 = <input type="text" class="fill-in" data-ans="0.832" data-alt-ans="0,832" id="add-6"></div>
+      </div>
+    </div>
+
+    <!-- 3b) Subtraktionen -->
+    <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">b) Minusrechnen:</div>
+    <div class="math-grid">
+      <div class="exercise-list">
+        <div class="exercise-row"><span class="num">7.</span> 8.10 − 3.50 = <input type="text" class="fill-in" data-ans="4.60" data-alt-ans="4.6|4,60|4,6" id="sub-1"></div>
+        <div class="exercise-row"><span class="num">8.</span> 0.81 − 0.35 = <input type="text" class="fill-in" data-ans="0.46" data-alt-ans="0,46" id="sub-2"></div>
+        <div class="exercise-row"><span class="num">9.</span> 5.20 − 0.60 = <input type="text" class="fill-in" data-ans="4.60" data-alt-ans="4.6|4,60|4,6" id="sub-3"></div>
+      </div>
+      <div class="exercise-list">
+        <div class="exercise-row"><span class="num">10.</span> 0.84 − 0.47 = <input type="text" class="fill-in" data-ans="0.37" data-alt-ans="0,37" id="sub-4"></div>
+        <div class="exercise-row"><span class="num">11.</span> 9.27 − 1.38 = <input type="text" class="fill-in" data-ans="7.89" data-alt-ans="7,89" id="sub-5"></div>
+        <div class="exercise-row"><span class="num">12.</span> 4.039 − 0.019 = <input type="text" class="fill-in" data-ans="4.02" data-alt-ans="4.020|4,02" id="sub-6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUFGABE 4: MULTIPLIKATION & DIVISION -->
+  <div class="aufgabe" id="task-4">
+    <div class="aufg-kopf">
+      <span class="aufg-nr">4</span>
+      <span class="aufg-typ">🔢</span>
+      <span class="aufg-titel">Multiplikation &amp; Division</span>
+    </div>
+
+    <div class="math-grid">
+      <!-- Mult -->
+      <div>
+        <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">a) Malrechnen:</div>
+        <div class="exercise-list">
+          <div class="exercise-row"><span class="num">1.</span> 600 · 0.003 = <input type="text" class="fill-in" data-ans="1.80" data-alt-ans="1.8|1,80|1,8" id="mult-1"></div>
+          <div class="exercise-row"><span class="num">2.</span> 5 · 0.008 = <input type="text" class="fill-in" data-ans="0.04" data-alt-ans="0,04" id="mult-2"></div>
+          <div class="exercise-row"><span class="num">3.</span> 40 · 0.07 = <input type="text" class="fill-in" data-ans="2.80" data-alt-ans="2.8|2,80|2,8" id="mult-3"></div>
+          <div class="exercise-row"><span class="num">4.</span> 800 · 0.003 = <input type="text" class="fill-in" data-ans="2.40" data-alt-ans="2.4|2,40|2,4" id="mult-4"></div>
+        </div>
+      </div>
+      
+      <!-- Div -->
+      <div>
+        <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">b) Geteiltrechnen:</div>
+        <div class="exercise-list">
+          <div class="exercise-row"><span class="num">5.</span> 2.40 ÷ 60 = <input type="text" class="fill-in" data-ans="0.04" data-alt-ans="0,04" id="div-1"></div>
+          <div class="exercise-row"><span class="num">6.</span> 0.28 ÷ 4 = <input type="text" class="fill-in" data-ans="0.07" data-alt-ans="0,07" id="div-2"></div>
+          <div class="exercise-row"><span class="num">7.</span> 18 ÷ 20 = <input type="text" class="fill-in" data-ans="0.90" data-alt-ans="0.9|0,90|0,9" id="div-3"></div>
+          <div class="exercise-row"><span class="num">8.</span> 2.10 ÷ 70 = <input type="text" class="fill-in" data-ans="0.03" data-alt-ans="0,03" id="div-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUFGABE 5: ERGÄNZEN -->
+  <div class="aufgabe" id="task-5">
+    <div class="aufg-kopf">
+      <span class="aufg-nr">5</span>
+      <span class="aufg-typ">🎯</span>
+      <span class="aufg-titel">Ergänze auf die nächste runde Zahl.</span>
+    </div>
+
+    <div class="math-grid">
+      <!-- 5a) Auf 1 -->
+      <div>
+        <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">a) Ergänze auf 1:</div>
+        <div class="exercise-list">
+          <div class="exercise-row"><span class="num">1.</span> 0.47 + <input type="text" class="fill-in" data-ans="0.53" data-alt-ans="0,53" id="erg-1"> = 1</div>
+          <div class="exercise-row"><span class="num">2.</span> 0.81 + <input type="text" class="fill-in" data-ans="0.19" data-alt-ans="0,19" id="erg-2"> = 1</div>
+          <div class="exercise-row"><span class="num">3.</span> 0.916 + <input type="text" class="fill-in" data-ans="0.084" data-alt-ans="0,084" id="erg-3"> = 1</div>
+        </div>
+      </div>
+      
+      <!-- 5b) Auf 10 & 0.1 -->
+      <div>
+        <div style="font-size:9.5pt; font-weight:700; color:var(--fach); margin-bottom:6px;">b) Ergänze auf 10 oder 0.1:</div>
+        <div class="exercise-list">
+          <div class="exercise-row"><span class="num">4.</span> 1.80 + <input type="text" class="fill-in" data-ans="8.20" data-alt-ans="8.2|8,20|8,2" id="erg-4"> = 10</div>
+          <div class="exercise-row"><span class="num">5.</span> 6.25 + <input type="text" class="fill-in" data-ans="3.75" data-alt-ans="3,75" id="erg-5"> = 10</div>
+          <div class="exercise-row"><span class="num">6.</span> 0.029 + <input type="text" class="fill-in" data-ans="0.071" data-alt-ans="0,071" id="erg-6"> = 0.1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ich kann Leiste am Ende von Seite 2 -->
+  <div class="ich-kann" style="margin-top: 10mm;">
+    <span class="ich-kann-label">Das kann ich:</span>
+    <div class="ich-kann-kreise">
+      <span class="ik-kreis"></span>
+      <span class="ik-kreis"></span>
+      <span class="ik-kreis"></span>
+    </div>
+    <span class="ich-kann-skala">
+      <span>Grosse Dezimal-Operationen ausführen</span>
+      <span>Ergänzungsaufgaben im Kopf berechnen</span>
+    </span>
+  </div>
+
+  <!-- CC OER Footer Page 2 -->
+  <footer class="ab-footer">
+    <span>© 2026 - Rechnen mit Dezimalzahlen (★★☆)</span>
+    <span>Lizensiert unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a></span>
+  </footer>
+
+</div><!-- /seite 2 -->
+
+<!-- =========================================
+     FLOATING TEACHER CONTROL PANEL (Screen Only)
+     ========================================= -->
+<div class="teacher-panel">
+  <div class="teacher-panel-title"> Lehrmittel-Panel (Standard ★★☆)</div>
+  <button class="btn-teacher btn-teacher-sec" onclick="toggleSolutionsOnScreen()">👁️ Lösungen an/aus</button>
+  <button class="btn-teacher btn-teacher-sec" onclick="printBlankWorksheet()">🖨️ Blanko drucken</button>
+  <button class="btn-teacher btn-teacher-pri" onclick="printSolutionsWorksheet()">🖨️ Lösungen drucken</button>
+  <button class="btn-teacher btn-teacher-reset" onclick="resetAllWorksheet()">🔄 Reset</button>
+</div>
+
+<script>
+// Safe storage wrapper functions
+function safeGetItem(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+function safeSetItem(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+function safeRemoveItem(key) { try { localStorage.removeItem(key); } catch (e) {} }
+function safeClear() { try { localStorage.clear(); } catch (e) {} }
+
+const SECTIONS = {
+  'task-1': {
+    inputs: [
+      'sw-1-z', 'sw-1-e', 'sw-1-zh', 'sw-1-h', 'sw-1-t',
+      'sw-2-z', 'sw-2-e', 'sw-2-zh', 'sw-2-h', 'sw-2-t',
+      'sw-3-z', 'sw-3-e', 'sw-3-zh', 'sw-3-h', 'sw-3-t',
+      'val-1-1', 'val-1-2', 'val-1-3', 'val-1-4'
+    ]
+  },
+  'task-2': {
+    inputs: ['steckbrief-ans']
+  },
+  'task-3': {
+    inputs: [
+      'add-1', 'add-2', 'add-3', 'add-4', 'add-5', 'add-6',
+      'sub-1', 'sub-2', 'sub-3', 'sub-4', 'sub-5', 'sub-6'
+    ]
+  },
+  'task-4': {
+    inputs: [
+      'mult-1', 'mult-2', 'mult-3', 'mult-4',
+      'div-1', 'div-2', 'div-3', 'div-4'
+    ]
+  },
+  'task-5': {
+    inputs: ['erg-1', 'erg-2', 'erg-3', 'erg-4', 'erg-5', 'erg-6']
+  }
+};
+
+function checkSectionInputs() {
+  Object.values(SECTIONS).forEach(section => {
+    section.inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      el.classList.remove('correct-ans', 'wrong-ans');
+      const val = el.value.trim().toLowerCase();
+      if (val === '') return;
+
+      const normalizedVal = val.replace(',', '.');
+      const mainAns = (el.dataset.ans || "").trim().toLowerCase().replace(',', '.');
+
+      let altMatches = false;
+      if (el.dataset.altAns) {
+        const alternatives = el.dataset.altAns.split('|').map(s => s.trim().toLowerCase().replace(',', '.'));
+        if (alternatives.includes(normalizedVal)) {
+          altMatches = true;
+        }
+      }
+
+      if (normalizedVal === mainAns || altMatches) {
+        el.classList.add('correct-ans');
+      } else {
+        el.classList.add('wrong-ans');
+      }
+    });
+  });
+}
+
+function saveProgress() {
+  Object.values(SECTIONS).forEach(section => {
+    section.inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value.trim() !== '') {
+        safeSetItem(`wa_s_${id}`, el.value);
+      } else if (el) {
+        safeRemoveItem(`wa_s_${id}`);
+      }
+    });
+  });
+}
+
+function restoreProgress() {
+  Object.values(SECTIONS).forEach(section => {
+    section.inputs.forEach(id => {
+      const saved = safeGetItem(`wa_s_${id}`);
+      const el = document.getElementById(id);
+      if (el && saved) {
+        el.value = saved;
+      }
+    });
+  });
+  checkSectionInputs();
+}
+
+let showSolutionsMode = false;
+function toggleSolutionsOnScreen() {
+  showSolutionsMode = !showSolutionsMode;
+  const body = document.body;
+  const watermarks = document.querySelectorAll('.solutions-watermark');
+
+  if (showSolutionsMode) {
+    body.classList.add('show-solutions-mode');
+    watermarks.forEach(w => {
+      w.textContent = "🏆 LÖSUNGSBLATT – RECHNEN MIT DEZIMALZAHLEN (STANDARD) – LEHRPERSONEN-ANSICHT 🏆";
+    });
+
+    Object.values(SECTIONS).forEach(section => {
+      section.inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.dataset.ans !== undefined && el.dataset.ans !== "") {
+          el.value = el.dataset.ans;
+          el.classList.add('correct-ans');
+        }
+      });
+    });
+  } else {
+    body.classList.remove('show-solutions-mode');
+    watermarks.forEach(w => {
+      w.textContent = "🏆 LÖSUNGSBLATT – RECHNEN MIT DEZIMALZAHLEN (STANDARD-NIVEAU) 🏆";
+    });
+
+    Object.values(SECTIONS).forEach(section => {
+      section.inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = safeGetItem(`wa_s_${id}`) || '';
+          el.classList.remove('correct-ans', 'wrong-ans');
+        }
+      });
+    });
+  }
+  checkSectionInputs();
+}
+
+function resetAllWorksheet() {
+  if (confirm("Möchtest du das gesamte Arbeitsblatt zurücksetzen?")) {
+    Object.values(SECTIONS).forEach(section => {
+      section.inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+        safeRemoveItem(`wa_s_${id}`);
+      });
+    });
+    if (showSolutionsMode) toggleSolutionsOnScreen();
+    checkSectionInputs();
+  }
+}
+
+function printBlankWorksheet() {
+  document.body.classList.remove('print-solutions-active');
+  window.print();
+}
+
+function printSolutionsWorksheet() {
+  const tempValues = {};
+  Object.values(SECTIONS).forEach(section => {
+    section.inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        tempValues[id] = el.value;
+        if (el.dataset.ans !== undefined && el.dataset.ans !== "") {
+          el.value = el.dataset.ans;
+        }
+      }
+    });
+  });
+
+  document.body.classList.add('print-solutions-active');
+
+  setTimeout(() => {
+    window.print();
+    document.body.classList.remove('print-solutions-active');
+    Object.values(SECTIONS).forEach(section => {
+      section.inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = tempValues[id];
+        }
+      });
+    });
+    checkSectionInputs();
+  }, 100);
+}
+
+window.addEventListener('load', () => {
+  restoreProgress();
+  Object.values(SECTIONS).forEach(section => {
+    section.inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', () => {
+          saveProgress();
+          checkSectionInputs();
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
