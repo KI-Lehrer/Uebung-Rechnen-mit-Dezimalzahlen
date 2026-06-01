@@ -74,10 +74,13 @@ body {
   }
   .seite {
     width: 100% !important;
-    min-height: 0 !important;
+    height: 272mm !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
+    position: relative !important;
+    page-break-after: always !important;
+    box-sizing: border-box !important;
   }
   .print-btn, .teacher-panel, .score-header {
     display: none !important;
@@ -182,10 +185,16 @@ body {
   }
   
   .ich-kann {
-    margin-top: 4mm !important;
+    position: absolute !important;
+    bottom: 16mm !important;
+    left: 20mm !important;
+    right: 20mm !important;
+    margin-top: 0 !important;
     padding-top: 2mm !important;
     font-size: 8pt !important;
     gap: 3mm !important;
+    border-top: 1px dashed #ccc !important;
+    background: white !important;
   }
   .ik-kreis {
     width: 5mm !important;
@@ -193,9 +202,14 @@ body {
   }
   
   .ab-footer {
-    bottom: 4mm !important;
+    position: absolute !important;
+    bottom: 6mm !important;
+    left: 20mm !important;
+    right: 20mm !important;
     font-size: 7.5pt !important;
     padding-top: 2mm !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: white !important;
   }
 }
 
