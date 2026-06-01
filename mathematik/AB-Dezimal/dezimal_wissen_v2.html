@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rechnen mit Dezimalzahlen – 5. Klasse</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================
+   TOKENS & RESET
+========================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c1:#FF6B6B;--c1l:#fff0f0;--c1m:#ffd5d5;
+  --c2:#4ECDC4;--c2l:#e8faf9;--c2m:#b8f0ec;
+  --c3:#FFE66D;--c3l:#fffbe6;--c3m:#fff3b0;
+  --c4:#A8E6CF;--c4l:#edfbf4;--c4m:#c8f4e0;
+  --c5:#C3A6FF;--c5l:#f3eeff;--c5m:#e0cfff;
+  --c6:#FF9F43;--c6l:#fff5e6;--c6m:#ffdba8;
+  --dark:#1e2a3a;--mid:#445566;--muted:#7a8fa0;
+  --bg:#f0f4f8;--white:#ffffff;
+  --rad:20px;--rad-sm:12px;
+  --shadow:0 6px 28px rgba(0,0,0,.10);
+  --shadow-lg:0 14px 48px rgba(0,0,0,.15);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--dark);line-height:1.7;font-size:17px;overflow-x:hidden}
+
+/* =========================================
+   DECORATIVE BG BLOBS
+========================================= */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 8% 15%,  rgba(255,107,107,.12) 0,transparent 35%),
+    radial-gradient(circle at 92% 20%,  rgba(78,205,196,.12) 0,transparent 35%),
+    radial-gradient(circle at 50% 85%,  rgba(195,166,255,.10) 0,transparent 40%),
+    radial-gradient(circle at 80% 60%,  rgba(255,159,67,.09) 0,transparent 30%);
+  pointer-events:none;z-index:0;
+}
+
+/* =========================================
+   HERO
+========================================= */
+.hero{
+  background:linear-gradient(135deg,#1e2a3a 0%,#2d3f55 50%,#1e2a3a 100%);
+  padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;
+  background:var(--bg);
+  clip-path:ellipse(55% 60px at 50% 100%);
+}
+.hero-emoji-row{
+  display:flex;justify-content:center;gap:14px;margin-bottom:24px;flex-wrap:wrap;
+}
+.hero-emoji{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;animation:float 3s ease-in-out infinite;
+}
+.hero-emoji:nth-child(1){background:var(--c1);animation-delay:0s}
+.hero-emoji:nth-child(2){background:var(--c2);animation-delay:.4s}
+.hero-emoji:nth-child(3){background:var(--c3);animation-delay:.8s}
+.hero-emoji:nth-child(4){background:var(--c4);animation-delay:1.2s}
+.hero-emoji:nth-child(5){background:var(--c5);animation-delay:1.6s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.hero h1{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(2rem,6vw,3.4rem);
+  color:#fff;line-height:1.15;margin-bottom:16px;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,var(--c3),var(--c6));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{color:rgba(255,255,255,.65);font-size:clamp(.95rem,2.5vw,1.15rem);max-width:560px;margin:0 auto 36px}
+
+.hero-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.hero-chip{
+  background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);
+  border-radius:30px;padding:8px 18px;color:#fff;
+  font-weight:800;font-size:.88rem;cursor:pointer;
+  transition:background .2s,transform .15s;text-decoration:none;
+}
+.hero-chip:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+
+/* =========================================
+   STICKY NAV
+========================================= */
+.snav{
+  position:sticky;top:0;z-index:200;
+  background:white;border-bottom:3px solid #eee;
+  display:flex;overflow-x:auto;scrollbar-width:none;
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
+}
+.snav::-webkit-scrollbar{display:none}
+.snav a{
+  padding:14px 22px;font-weight:800;font-size:.87rem;white-space:nowrap;
+  color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-3px;
+  text-decoration:none;transition:all .2s;flex-shrink:0;display:flex;align-items:center;gap:6px;
+}
+.snav a:hover{color:var(--dark)}
+.snav a.active{color:var(--c1);border-bottom-color:var(--c1)}
+
+/* =========================================
+   PAGE SHELL
+========================================= */
+.page{max-width:940px;margin:0 auto;padding:48px 20px 80px;position:relative;z-index:1}
+
+/* =========================================
+   CHAPTER HEADER
+========================================= */
+.chapter{margin-top:80px}
+.chapter-header{
+  display:flex;align-items:center;gap:18px;margin-bottom:32px;
+  padding:26px 30px;border-radius:var(--rad);
+  position:relative;overflow:hidden;
+}
+.chapter-header::before{
+  content:'';position:absolute;right:-20px;top:-20px;
+  width:140px;height:140px;border-radius:50%;opacity:.18;
+}
+.ch-icon{
+  width:62px;height:62px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.ch-text h2{font-family:'Fredoka One',cursive;font-size:clamp(1.4rem,4vw,1.9rem);margin-bottom:4px}
+.ch-text p{font-size:.92rem;opacity:.8;font-weight:600}
+
+/* Chapter color schemes */
+.ch-add{background:linear-gradient(135deg,var(--c1l),var(--c1m))}
+.ch-add .ch-icon{background:var(--c1);color:#fff}
+.ch-add .chapter-header::before{background:var(--c1)}
+.ch-add h2{color:var(--c1)}
+
+.ch-sub{background:linear-gradient(135deg,var(--c2l),var(--c2m))}
+.ch-sub .ch-icon{background:var(--c2);color:#fff}
+.ch-sub .chapter-header::before{background:var(--c2)}
+.ch-sub h2{color:#2a9d96}
+
+.ch-mult{background:linear-gradient(135deg,var(--c6l),var(--c6m))}
+.ch-mult .ch-icon{background:var(--c6);color:#fff}
+.ch-mult .chapter-header::before{background:var(--c6)}
+.ch-mult h2{color:#c07a1a}
+
+.ch-div{background:linear-gradient(135deg,var(--c4l),var(--c4m))}
+.ch-div .ch-icon{background:#3abd84;color:#fff}
+.ch-div .chapter-header::before{background:#3abd84}
+.ch-div h2{color:#2e8a60}
+
+.ch-erg{background:linear-gradient(135deg,var(--c5l),var(--c5m))}
+.ch-erg .ch-icon{background:var(--c5);color:#fff}
+.ch-erg .chapter-header::before{background:var(--c5)}
+.ch-erg h2{color:#7349cc}
+
+/* =========================================
+   CARDS
+========================================= */
+.card{
+  background:var(--white);border-radius:var(--rad);
+  box-shadow:var(--shadow);padding:28px 32px;margin-bottom:20px;
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-lg)}
+
+.card-label{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;
+  padding:5px 13px;border-radius:20px;margin-bottom:14px;
+}
+.lbl-theorie{background:#fff3cd;color:#a0761a}
+.lbl-uebung{background:#d4edda;color:#1a6e35}
+.lbl-merke{background:#ffe4e1;color:#c0392b}
+.lbl-beispiel{background:#d5e8ff;color:#1a5ab8}
+
+.card h3{font-family:'Fredoka One',cursive;font-size:1.25rem;margin-bottom:12px;color:var(--dark)}
+.card p,.card li{font-size:.97rem;line-height:1.75;color:var(--mid)}
+.card ul,.card ol{padding-left:22px;margin:10px 0}
+.card li{margin-bottom:5px}
+
+/* =========================================
+   INFO CALLOUTS
+========================================= */
+.callout{
+  border-radius:var(--rad-sm);padding:16px 20px;margin:16px 0;
+  display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;
+}
+.callout-icon{font-size:1.5rem;margin-top:1px}
+.callout strong{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;font-weight:900}
+.callout p,.callout li{font-size:.92rem;margin:0}
+.callout.merke{background:#fff9e6;border-left:4px solid #f39c12}
+.callout.merke strong{color:#b37a10}
+.callout.tipp{background:#e8f4ff;border-left:4px solid #3498db}
+.callout.tipp strong{color:#1a6fa0}
+.callout.achtung{background:#fff0f0;border-left:4px solid var(--c1)}
+.callout.achtung strong{color:#c0392b}
+.callout.beispiel{background:#eafaf1;border-left:4px solid #27ae60}
+.callout.beispiel strong{color:#1a7a45}
+
+/* =========================================
+   ANALOG TABLE (Rechnungsfolge)
+========================================= */
+.analog-wrap{overflow-x:auto;margin:14px 0}
+.analog-tbl{border-collapse:separate;border-spacing:0 6px;width:100%;min-width:340px}
+.analog-tbl td{padding:10px 18px;font-weight:800;font-size:1.05rem;font-family:'Nunito',monospace}
+.analog-tbl tr td:first-child{border-radius:10px 0 0 10px}
+.analog-tbl tr td:last-child{border-radius:0 10px 10px 0;font-size:.83rem;font-weight:600;color:var(--muted)}
+.analog-tbl .row-a td:first-child{background:#fde8e8}
+.analog-tbl .row-a td:last-child{background:#fff5f5}
+.analog-tbl .row-b td:first-child{background:#dff4f2}
+.analog-tbl .row-b td:last-child{background:#edfaf8}
+.analog-tbl .row-c td:first-child{background:#fff8d6}
+.analog-tbl .row-c td:last-child{background:#fffceb}
+.analog-tbl .row-hl td:first-child{background:#d4f5e3;color:#1a7a45}
+.analog-tbl .row-hl td:last-child{background:#eafaf1;color:#1a7a45}
+.analog-tbl .row-d td:first-child{background:#e8e0ff}
+.analog-tbl .row-d td:last-child{background:#f3eeff}
+
+/* =========================================
+   STELLENWERT DEMO
+========================================= */
+.sw-strip{
+  display:flex;align-items:stretch;gap:3px;margin:16px 0;flex-wrap:nowrap;overflow-x:auto;
+  background:#f8fafc;border-radius:14px;padding:12px;
+}
+.sw-col{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px}
+.sw-hd{
+  font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;
+  padding:5px 8px;border-radius:7px;color:white;width:100%;text-align:center;
+}
+.sw-dig{
+  font-family:'Fredoka One',cursive;font-size:1.7rem;
+  width:100%;text-align:center;padding:8px 4px;border-radius:10px;
+  border:2px solid transparent;line-height:1;
+}
+.sw-nm{font-size:.6rem;color:var(--muted);font-weight:700;text-align:center;line-height:1.3;max-width:54px}
+.sw-comma{display:flex;align-items:center;font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--dark);padding:0 4px;margin-top:16px}
+
+.col-T  .sw-hd{background:#e74c3c}.col-T  .sw-dig{background:#fde8e8;color:#c0392b;border-color:#ffc8c8}
+.col-H  .sw-hd{background:#e67e22}.col-H  .sw-dig{background:#fdebd0;color:#b7660d;border-color:#ffd5a0}
+.col-Z  .sw-hd{background:#27ae60}.col-Z  .sw-dig{background:#d4f5e3;color:#1a7a45;border-color:#a8e8c2}
+.col-E  .sw-hd{background:#2980b9}.col-E  .sw-dig{background:#d6eaf8;color:#1a5a90;border-color:#a8d5f0}
+.col-Zh .sw-hd{background:#8e44ad}.col-Zh .sw-dig{background:#e8d5f5;color:#6a2e9a;border-color:#d0a8f0}
+.col-Hh .sw-hd{background:#16a085}.col-Hh .sw-dig{background:#d0f0e8;color:#0e6b5a;border-color:#90e0cc}
+.col-Th .sw-hd{background:#c0392b}.col-Th .sw-dig{background:#fde8e8;color:#8e2219;border-color:#f5b8b0}
+
+/* =========================================
+   FLIP CARDS
+========================================= */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin:16px 0}
+.flip-card{height:140px;cursor:pointer;perspective:1000px;-webkit-tap-highlight-color:transparent}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-f,.flip-b{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;
+}
+.flip-f{background:white;border:2.5px solid #e8edf2;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.flip-f .fq{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--dark)}
+.flip-f .fhint{font-size:.74rem;color:var(--muted);margin-top:6px}
+.flip-b{background:linear-gradient(135deg,#27ae60,#2ecc71);color:white;transform:rotateY(180deg)}
+.flip-b .fans{font-family:'Fredoka One',cursive;font-size:1.4rem}
+.flip-b .fexp{font-size:.76rem;opacity:.85;margin-top:5px}
+
+/* =========================================
+   QUIZ (Multiple Choice)
+========================================= */
+.quiz-block{background:#f8fafc;border-radius:14px;padding:20px;margin-bottom:14px}
+.quiz-block .qtext{font-weight:800;font-size:1.05rem;margin-bottom:14px;color:var(--dark)}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.qopt{
+  padding:11px 14px;border:2.5px solid #dde3ea;border-radius:12px;
+  background:white;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;
+  cursor:pointer;transition:all .15s;text-align:center;color:var(--dark);
+}
+.qopt:hover:not(.disabled){border-color:#aab;background:#f0f4f8;transform:translateY(-1px)}
+.qopt.correct{background:#eafaf1;border-color:#27ae60;color:#1a7a45}
+.qopt.wrong  {background:#fff0f0;border-color:#e74c3c;color:#c0392b}
+.qopt.disabled{cursor:default}
+.qfeedback{
+  padding:9px 14px;border-radius:9px;font-weight:700;font-size:.88rem;
+  margin-top:10px;display:none;
+}
+.qfeedback.show{display:block}
+.qfeedback.ok{background:#eafaf1;color:#1a7a45}
+.qfeedback.fail{background:#fff0f0;color:#c0392b}
+
+/* =========================================
+   FILL-IN
+========================================= */
+.fill-row{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  padding:10px 16px;background:white;border-radius:12px;
+  border:2px solid #e8edf2;margin-bottom:10px;
+}
+.fill-eq{font-family:'Nunito',monospace;font-weight:800;font-size:1.1rem;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.fill-in{
+  border:none;border-bottom:3px solid var(--c1);background:transparent;
+  width:72px;text-align:center;font-family:'Nunito',sans-serif;
+  font-weight:800;font-size:1.1rem;color:var(--c1);outline:none;padding:0 4px;
+  transition:border-color .2s;
+}
+.fill-in:focus{border-color:#e67e22}
+.fill-in.ok  {border-color:#27ae60;color:#27ae60}
+.fill-in.err {border-color:#e74c3c;color:#e74c3c;background:#fff0f0;border-radius:5px}
+.fill-check{
+  border:none;border-radius:10px;padding:8px 20px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  cursor:pointer;transition:all .15s;color:white;margin-top:6px;
+}
+.fill-check:active{transform:scale(.95)}
+.score-bar{
+  margin-top:12px;display:flex;align-items:center;gap:12px;
+  background:#f8fafc;border-radius:10px;padding:10px 16px;
+}
+.score-num{font-family:'Fredoka One',cursive;font-size:1.4rem}
+.score-txt{font-size:.88rem;color:var(--muted);font-weight:700}
+
+/* =========================================
+   LERNFORTSCHRITT
+========================================= */
+.fortschritt{
+  background:white;border-radius:var(--rad);box-shadow:var(--shadow);
+  padding:22px 28px;margin-bottom:36px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:18px;
+}
+.fs-label{font-family:'Fredoka One',cursive;font-size:1.1rem;flex-shrink:0}
+.fs-bar-wrap{flex:1;min-width:120px;background:#eee;border-radius:30px;height:14px;overflow:hidden}
+.fs-bar{
+  height:100%;background:linear-gradient(90deg,var(--c1),var(--c6),var(--c3));
+  border-radius:30px;transition:width .6s ease;
+}
+.fs-count{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--c1);white-space:nowrap}
+.fs-stars{font-size:1.3rem;letter-spacing:2px}
+
+/* =========================================
+   REVEAL ANIMATION
+========================================= */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* =========================================
+   PRINT BUTTON
+========================================= */
+.print-zone{text-align:center;padding:44px 20px;border-top:2px dashed #dde3ea;margin-top:30px}
+.pbtn{
+  background:white;border:2.5px solid #ccd5e0;border-radius:14px;
+  padding:12px 32px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.95rem;color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.pbtn:hover{border-color:#8899aa;color:var(--dark);transform:translateY(-2px)}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media(max-width:540px){
+  .quiz-opts{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr 1fr}
+  .chapter-header{flex-direction:column;text-align:center}
+  .card{padding:20px 18px}
+}
+@media print{
+  .snav,.hero,.print-zone,.flip-card,.quiz-block,.fill-check{display:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  body{background:white;font-size:11pt}
+  .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-emoji-row">
+    <div class="hero-emoji">➕</div>
+    <div class="hero-emoji">➖</div>
+    <div class="hero-emoji">✖️</div>
+    <div class="hero-emoji">➗</div>
+    <div class="hero-emoji">🎯</div>
+  </div>
+  <h1>Rechnen mit<br><span>Dezimalzahlen</span></h1>
+  <p class="hero-sub">Alles, was du wissen musst – mit Erklärungen, Beispielen und Übungen für die 5. Klasse.</p>
+  <div class="hero-chips">
+    <a href="#stellenwert" class="hero-chip">📐 Stellenwert</a>
+    <a href="#addition"    class="hero-chip">➕ Addition</a>
+    <a href="#subtraktion" class="hero-chip">➖ Subtraktion</a>
+    <a href="#multiplikation" class="hero-chip">✖️ Multiplikation</a>
+    <a href="#division"    class="hero-chip">➗ Division</a>
+    <a href="#ergaenzen"   class="hero-chip">🎯 Ergänzen</a>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="snav" id="snav">
+  <a href="#stellenwert"    data-id="stellenwert">📐 Stellenwert</a>
+  <a href="#addition"       data-id="addition">➕ Addition</a>
+  <a href="#subtraktion"    data-id="subtraktion">➖ Subtraktion</a>
+  <a href="#multiplikation" data-id="multiplikation">✖️ Multiplikation</a>
+  <a href="#division"       data-id="division">➗ Division</a>
+  <a href="#ergaenzen"      data-id="ergaenzen">🎯 Ergänzen</a>
+  <a href="#quiz"           data-id="quiz" style="color:#e74c3c;font-weight:900">🏆 Abschluss-Quiz</a>
+</nav>
+
+<div class="page">
+
+<!-- FORTSCHRITT -->
+<div class="fortschritt reveal">
+  <div class="fs-label">🏅 Mein Lernfortschritt</div>
+  <div class="fs-bar-wrap"><div class="fs-bar" id="fsBar" style="width:0%"></div></div>
+  <div class="fs-count"><span id="fsOk">0</span> / <span id="fsTotal">0</span></div>
+  <div class="fs-stars" id="fsStars">⭐⭐⭐⭐⭐</div>
+</div>
+
+<!-- ==================================================
+     0. STELLENWERT
+================================================== -->
+<section id="stellenwert" class="chapter reveal">
+  <div class="chapter-header ch-add">
+    <div class="ch-icon">📐</div>
+    <div class="ch-text">
+      <h2>Die Stellenwerttafel</h2>
+      <p>Jede Ziffer hat einen festen Platz – und damit einen festen Wert.</p>
+    </div>
+  </div>
+
+  <!-- THEORIE -->
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Was ist eine Dezimalzahl?</h3>
+    <p>Eine Dezimalzahl hat Stellen <strong>nach dem Komma</strong> (wir schreiben in der Schweiz einen <strong>Punkt</strong>). Jede Stelle ist genau <strong>10-mal kleiner</strong> als die Stelle links davon.</p>
+    <div class="callout merke">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Merke dir diese Kette</strong>
+        <p>1 Einer = 10 Zehntel = 100 Hundertstel = 1000 Tausendstel<br>
+        <strong>0.1 = ein Zehntel &nbsp;|&nbsp; 0.01 = ein Hundertstel &nbsp;|&nbsp; 0.001 = ein Tausendstel</strong></p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px"><strong>Beispiel: Die Zahl 3.075 in der Stellenwerttafel:</strong></p>
+    <div class="sw-strip">
+      <div class="sw-col col-T"><div class="sw-hd">T</div><div class="sw-dig" style="opacity:.22">0</div><div class="sw-nm">Tausender</div></div>
+      <div class="sw-col col-H"><div class="sw-hd">H</div><div class="sw-dig" style="opacity:.22">0</div><div class="sw-nm">Hunderter</div></div>
+      <div class="sw-col col-Z"><div class="sw-hd">Z</div><div class="sw-dig" style="opacity:.22">0</div><div class="sw-nm">Zehner</div></div>
+      <div class="sw-col col-E"><div class="sw-hd">E</div><div class="sw-dig">3</div><div class="sw-nm">Einer</div></div>
+      <div class="sw-comma">,</div>
+      <div class="sw-col col-Zh"><div class="sw-hd">Zh</div><div class="sw-dig" style="opacity:.22">0</div><div class="sw-nm">Zehntel</div></div>
+      <div class="sw-col col-Hh"><div class="sw-hd">Hh</div><div class="sw-dig">7</div><div class="sw-nm">Hundertstel</div></div>
+      <div class="sw-col col-Th"><div class="sw-hd">Th</div><div class="sw-dig">5</div><div class="sw-nm">Tausendstel</div></div>
+    </div>
+    <p>Die Zahl <strong>3.075</strong> besteht aus: 3 Einern + 0 Zehntel + 7 Hundertstel + 5 Tausendstel.</p>
+
+    <div class="callout tipp" style="margin-top:16px">
+      <span class="callout-icon">💡</span>
+      <div>
+        <strong>Tipp fürs Rechnen</strong>
+        <p>Schreibe Dezimalzahlen so untereinander, dass die Punkte übereinanderstehen. Dann stehen Zehntel unter Zehntel, Hundertstel unter Hundertstel – und du machst keine Fehler!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Quiz -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>Stellenwert erkennen – Quiz</h3>
+    <div class="quiz-block">
+      <div class="qtext">Welchen Wert hat die <strong>7</strong> in der Zahl <strong>3.075</strong>?</div>
+      <div class="quiz-opts">
+        <button class="qopt" onclick="ansQ(this,'7 Zehntel','7 Hundertstel','Nein! 7 steht an der Hundertstelstelle (2. Stelle nach dem Komma). 7 Hundertstel = 0.07')">7 Zehntel</button>
+        <button class="qopt" onclick="ansQ(this,'7 Hundertstel','7 Hundertstel','Richtig! 7 steht an der Hundertstelstelle – also 0.07.')">7 Hundertstel</button>
+        <button class="qopt" onclick="ansQ(this,'7 Tausendstel','7 Hundertstel','Nein! Tausendstel wäre die 3. Stelle nach dem Komma.')">7 Tausendstel</button>
+        <button class="qopt" onclick="ansQ(this,'7 Einer','7 Hundertstel','Nein! Die Einer-Stelle steht vor dem Komma.')">7 Einer</button>
+      </div>
+      <div class="qfeedback" id="qfb-sw1"></div>
+    </div>
+    <div class="quiz-block">
+      <div class="qtext">Wie viel ist <strong>0.001</strong>?</div>
+      <div class="quiz-opts">
+        <button class="qopt" onclick="ansQ(this,'1 Zehntel','1 Tausendstel','Nein! 1 Zehntel schreibt man 0.1')">1 Zehntel</button>
+        <button class="qopt" onclick="ansQ(this,'1 Hundertstel','1 Tausendstel','Nein! 1 Hundertstel schreibt man 0.01')">1 Hundertstel</button>
+        <button class="qopt" onclick="ansQ(this,'1 Tausendstel','1 Tausendstel','Richtig! 3 Stellen nach dem Komma = Tausendstel.')">1 Tausendstel</button>
+        <button class="qopt" onclick="ansQ(this,'10 Hundertstel','1 Tausendstel','Achtung: 10 Hundertstel = 0.10 = 0.1 – das wäre 1 Zehntel.')">10 Hundertstel</button>
+      </div>
+      <div class="qfeedback" id="qfb-sw2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     1. ADDITION
+================================================== -->
+<section id="addition" class="chapter reveal">
+  <div class="chapter-header ch-add">
+    <div class="ch-icon">➕</div>
+    <div class="ch-text">
+      <h2>Addition mit Dezimalzahlen</h2>
+      <p>Addieren durch «analoge Rechnungen» – cleverer als du denkst!</p>
+    </div>
+  </div>
+
+  <!-- THEORIE -->
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Die Grundidee: Analoge Rechnungen</h3>
+    <p>Das Geheimnis beim Addieren von Dezimalzahlen: Du kennst die Antwort schon – du musst nur <strong>eine analoge Rechnung mit ganzen Zahlen</strong> finden und das Ergebnis übertragen!</p>
+
+    <div class="callout beispiel" style="margin:14px 0">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 6.09 + 0.18</strong>
+        <p>Ich erkenne: Das sind Hundertstel!<br>
+        609 Hundertstel + 18 Hundertstel = 627 Hundertstel<br>
+        → <strong>6.09 + 0.18 = 6.27</strong> ✓</p>
+      </div>
+    </div>
+
+    <p>Du siehst: Alle diese Rechnungen sind «Geschwister» – sie haben alle dieselbe Ziffernfolge <strong>56 + 12 = 68</strong>:</p>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>5600 + 1200 = 6800</td><td>10× grösser als 560 + 120</td></tr>
+        <tr class="row-b"><td>560 + 120 = 680</td><td>die «Grundrechnung»</td></tr>
+        <tr class="row-c"><td>56 + 12 = 68</td><td>alle Ziffern gleich!</td></tr>
+        <tr class="row-a"><td>5.6 + 1.2 = 6.8</td><td>10× kleiner als 56 + 12</td></tr>
+        <tr class="row-hl"><td>0.56 + 0.12 = 0.68</td><td>← Ziel erreicht ✓</td></tr>
+        <tr class="row-d"><td>0.056 + 0.012 = 0.068</td><td>noch 10× kleiner</td></tr>
+      </table>
+    </div>
+
+    <div class="callout merke">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Die zwei Wege</strong>
+        <p><strong>Weg 1 – Analoge Rechnung:</strong> Finde 56 + 12 = 68, übertrage auf 0.56 + 0.12 = 0.68.<br>
+        <strong>Weg 2 – Einheiten zählen:</strong> 56 Hundertstel + 12 Hundertstel = 68 Hundertstel = 0.68.</p>
+      </div>
+    </div>
+
+    <div class="callout achtung" style="margin-top:14px">
+      <span class="callout-icon">⚠️</span>
+      <div>
+        <strong>Vorsicht – «Nullen zählen» klappt nicht!</strong>
+        <p>Bei Dezimalzahlen kann man <em>nicht</em> einfach Nullen zählen wie bei 10 × 5. Immer mit Einheiten (Zehntel, Hundertstel ...) denken!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEORIE: Wertziffer -->
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Addition mit einer Wertziffer</h3>
+    <p>Manchmal addierst du zu einer beliebigen Dezimalzahl eine Zahl mit <strong>nur einer Wertziffer</strong> (also eine Zahl wie 0.3, 0.07 oder 0.004). Das ist der Baustein für grössere Additionen.</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 20.84 + 0.07</strong>
+        <p>0.07 hat nur die Wertziffer 7 (Hundertstel).<br>
+        84 Hundertstel + 7 Hundertstel = 91 Hundertstel.<br>
+        → <strong>20.84 + 0.07 = 20.91</strong> ✓</p>
+      </div>
+    </div>
+    <p>Weitere Beispiele auf einen Blick:</p>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>20.84 + 70 = 90.84</td><td>70 = 7 Zehner</td></tr>
+        <tr class="row-b"><td>20.84 + 7 = 27.84</td><td>7 = 7 Einer</td></tr>
+        <tr class="row-c"><td>20.84 + 0.7 = 21.54</td><td>0.7 = 7 Zehntel</td></tr>
+        <tr class="row-hl"><td>20.84 + 0.07 = 20.91</td><td>0.07 = 7 Hundertstel ✓</td></tr>
+        <tr class="row-d"><td>20.84 + 0.007 = 20.847</td><td>0.007 = 7 Tausendstel</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Flip Cards -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>🃏 Lernkarten – tippe zum Aufdecken!</h3>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.63 + 0.74 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">1.37</div><div class="fexp">63 + 74 = 137 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.596 + 0.007 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">0.603</div><div class="fexp">596 + 7 = 603 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">2.851 + 0.026 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">2.877</div><div class="fexp">2851 + 26 = 2877 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">5.6 + 1.2 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">6.8</div><div class="fexp">56 + 12 = 68 Zt</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.742 + 0.09 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">0.832</div><div class="fexp">742 + 90 = 832 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.895 + 0.006 = ?</div><div class="fhint">👆 Tippe für die Lösung</div></div>
+          <div class="flip-b"><div class="fans">0.901</div><div class="fexp">895 + 6 = 901 Tsd</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Fill-in -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>✍️ Rechnungsfolge ergänzen</h3>
+    <p style="margin-bottom:14px">Erkenne das Muster und trage das Ergebnis ein.</p>
+    <div id="fill-add"></div>
+    <button class="fill-check" style="background:var(--c1)" onclick="checkFill('add')">Überprüfen ✓</button>
+    <div class="score-bar" id="score-add" style="display:none">
+      <span class="score-num" id="sn-add">–</span>
+      <span class="score-txt" id="st-add">Punkte</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     2. SUBTRAKTION
+================================================== -->
+<section id="subtraktion" class="chapter reveal">
+  <div class="chapter-header ch-sub">
+    <div class="ch-icon">➖</div>
+    <div class="ch-text">
+      <h2>Subtraktion mit Dezimalzahlen</h2>
+      <p>Genauso wie die Addition – mit analogen Rechnungen.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Ableiten aus ganzen Zahlen</h3>
+    <p>Auch beim Subtrahieren hilft dir die analoge Rechnung mit ganzen Zahlen:</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 0.81 − 0.35</strong>
+        <p>Ich erkenne: das sind Hundertstel!<br>
+        81 Hundertstel − 35 Hundertstel = 46 Hundertstel<br>
+        → <strong>0.81 − 0.35 = 0.46</strong> ✓</p>
+      </div>
+    </div>
+    <p>Die ganze Rechnungsfolge:</p>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>8100 − 3500 = 4600</td><td>100× grösser</td></tr>
+        <tr class="row-b"><td>810 − 350 = 460</td><td>10× grösser</td></tr>
+        <tr class="row-c"><td>81 − 35 = 46</td><td>Grundrechnung</td></tr>
+        <tr class="row-hl"><td>0.81 − 0.35 = 0.46</td><td>← Ziel ✓</td></tr>
+        <tr class="row-d"><td>0.081 − 0.035 = 0.046</td><td>10× kleiner</td></tr>
+      </table>
+    </div>
+
+    <div class="callout tipp" style="margin-top:14px">
+      <span class="callout-icon">💡</span>
+      <div>
+        <strong>Noch ein Trick: Einheiten zählen</strong>
+        <p>Denke: <em>Wie viele Hundertstel sind das?</em><br>
+        0.84 = 84 Hst &nbsp;|&nbsp; 0.47 = 47 Hst &nbsp;|&nbsp; 84 − 47 = 37 Hst = <strong>0.37</strong></p>
+      </div>
+    </div>
+
+    <div class="callout merke" style="margin-top:14px">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Weitere Beispiele</strong>
+        <p>520 − 60 = 460 &nbsp;→&nbsp; 5.2 − 0.6 = 4.6<br>
+        84 − 47 = 37 &nbsp;→&nbsp; 0.84 − 0.47 = 0.37<br>
+        927 − 138 = 789 &nbsp;→&nbsp; 9.27 − 1.38 = 7.89</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Flip Cards -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>🃏 Lernkarten</h3>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.51 − 0.39 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.12</div><div class="fexp">51 − 39 = 12 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.802 − 0.005 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.797</div><div class="fexp">802 − 5 = 797 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">4.039 − 0.019 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">4.02</div><div class="fexp">4039 − 19 = 4020 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">8.1 − 3.5 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">4.6</div><div class="fexp">81 − 35 = 46 Zt</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.503 − 0.005 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.498</div><div class="fexp">503 − 5 = 498 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.72 − 0.51 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.21</div><div class="fexp">72 − 51 = 21 Hst</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Fill-in -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>✍️ Ergänze das Ergebnis</h3>
+    <div id="fill-sub"></div>
+    <button class="fill-check" style="background:#2a9d96" onclick="checkFill('sub')">Überprüfen ✓</button>
+    <div class="score-bar" id="score-sub" style="display:none">
+      <span class="score-num" id="sn-sub">–</span>
+      <span class="score-txt" id="st-sub">Punkte</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     3. MULTIPLIKATION
+================================================== -->
+<section id="multiplikation" class="chapter reveal">
+  <div class="chapter-header ch-mult">
+    <div class="ch-icon">✖️</div>
+    <div class="ch-text">
+      <h2>Multiplikation mit Dezimalzahlen</h2>
+      <p>Wenn ein Faktor 10× kleiner wird, wird das Produkt auch 10× kleiner.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Das Grundprinzip: Rechnungsfolgen</h3>
+    <p>Beim Multiplizieren hilft dir eine <strong>Rechnungsfolge</strong>: Du startest mit einer einfachen Rechnung mit ganzen Zahlen und leitest dich Schritt für Schritt zum Ziel:</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 600 · 0.003</strong>
+        <p>600 · 3 = 1800 &nbsp;→&nbsp; 600 · 0.3 = 180 &nbsp;→&nbsp; 600 · 0.03 = 18 &nbsp;→&nbsp; <strong>600 · 0.003 = 1.8</strong></p>
+      </div>
+    </div>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>600 · 3 = 1800</td><td>Startrechnung</td></tr>
+        <tr class="row-b"><td>600 · 0.3 = 180</td><td>Faktor 10× kleiner → Produkt 10× kleiner</td></tr>
+        <tr class="row-c"><td>600 · 0.03 = 18</td><td>nochmal 10× kleiner</td></tr>
+        <tr class="row-hl"><td>600 · 0.003 = 1.8</td><td>← Ziel ✓</td></tr>
+      </table>
+    </div>
+
+    <div class="callout merke" style="margin-top:14px">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Denken mit Einheiten – Weg 2</strong>
+        <p>600 · 3 Tausendstel = 1800 Tausendstel = <strong>1.8</strong><br>
+        <small>(1800 Tausendstel = 1800 · 0.001 = 1.8)</small></p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px"><strong>Noch ein Beispiel: 40 · 0.07</strong></p>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>40 · 70 = 2800</td><td></td></tr>
+        <tr class="row-b"><td>40 · 7 = 280</td><td></td></tr>
+        <tr class="row-c"><td>40 · 0.7 = 28</td><td></td></tr>
+        <tr class="row-hl"><td>40 · 0.07 = 2.8</td><td>← Ziel ✓</td></tr>
+        <tr class="row-d"><td>40 · 0.007 = 0.28</td><td>noch 10× kleiner</td></tr>
+      </table>
+    </div>
+
+    <div class="callout tipp" style="margin-top:14px">
+      <span class="callout-icon">💡</span>
+      <div>
+        <strong>Kurzweg: 6 · 3 = 18</strong>
+        <p>Oft reicht es, die vereinfachte Rechnung zu kennen:<br>
+        6 · 3 = 18 &nbsp;→&nbsp; 6 · 0.003 = 0.018 &nbsp;|&nbsp; 0.6 · 0.003 = 0.0018<br>
+        Wähle immer den Weg, der am einfachsten ist!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Quiz -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>🧠 Multiplikations-Quiz</h3>
+    <div class="quiz-block">
+      <div class="qtext">Wie viel ist <strong>5 · 0.008</strong>?</div>
+      <div class="quiz-opts">
+        <button class="qopt" onclick="ansQ(this,'0.04','0.04','Richtig! 5 · 8 = 40 Tausendstel = 0.040 = 0.04 ✓')">0.04</button>
+        <button class="qopt" onclick="ansQ(this,'0.4','0.04','Fast! 5 · 8 = 40, aber als Tausendstel: 0.040 = 0.04')">0.4</button>
+        <button class="qopt" onclick="ansQ(this,'0.004','0.04','Nein. 5 · 8 Tausendstel = 40 Tausendstel = 0.04')">0.004</button>
+        <button class="qopt" onclick="ansQ(this,'4','0.04','Nein! 5 · 0.008 ist viel kleiner als 4.')">4</button>
+      </div>
+      <div class="qfeedback" id="qfb-m1"></div>
+    </div>
+    <div class="quiz-block">
+      <div class="qtext">Wie viel ist <strong>800 · 0.003</strong>?</div>
+      <div class="quiz-opts">
+        <button class="qopt" onclick="ansQ(this,'2.4','2.4','Richtig! 800 · 3 = 2400 Tausendstel = 2.4 ✓')">2.4</button>
+        <button class="qopt" onclick="ansQ(this,'24','2.4','Nein. 800 · 3 = 2400 Tausendstel, nicht 24.')">24</button>
+        <button class="qopt" onclick="ansQ(this,'0.24','2.4','Nein. 800 · 3 = 2400 Tausendstel = 2400 · 0.001 = 2.4')">0.24</button>
+        <button class="qopt" onclick="ansQ(this,'240','2.4','Nein! Das wäre 800 · 0.3.')">240</button>
+      </div>
+      <div class="qfeedback" id="qfb-m2"></div>
+    </div>
+    <div class="quiz-block">
+      <div class="qtext">Wie viel ist <strong>20 · 0.09</strong>?</div>
+      <div class="quiz-opts">
+        <button class="qopt" onclick="ansQ(this,'1.8','1.8','Richtig! 20 · 9 = 180 Hundertstel = 1.80 = 1.8 ✓')">1.8</button>
+        <button class="qopt" onclick="ansQ(this,'0.18','1.8','Fast! 20 · 9 = 180 Hundertstel – das sind 1.80, nicht 0.18.')">0.18</button>
+        <button class="qopt" onclick="ansQ(this,'18','1.8','Nein! Das wäre 20 · 0.9.')">18</button>
+        <button class="qopt" onclick="ansQ(this,'0.018','1.8','Nein! Viel zu klein. 20 · 9 = 180.')">0.018</button>
+      </div>
+      <div class="qfeedback" id="qfb-m3"></div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Fill-in -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>✍️ Rechnungsfolge vervollständigen</h3>
+    <div id="fill-mult"></div>
+    <button class="fill-check" style="background:var(--c6)" onclick="checkFill('mult')">Überprüfen ✓</button>
+    <div class="score-bar" id="score-mult" style="display:none">
+      <span class="score-num" id="sn-mult">–</span>
+      <span class="score-txt" id="st-mult">Punkte</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     4. DIVISION
+================================================== -->
+<section id="division" class="chapter reveal">
+  <div class="chapter-header ch-div">
+    <div class="ch-icon">➗</div>
+    <div class="ch-text">
+      <h2>Division mit Dezimalzahlen</h2>
+      <p>Kleinerer Dividend → kleinerer Quotient – ganz analog!</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Das Prinzip der Rechnungsfolge</h3>
+    <p>Wie bei der Multiplikation: Wir starten mit einer einfachen Rechnung und leiten uns schrittweise zur Dezimalzahl:</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 2.4 ÷ 60</strong>
+        <p>240 ÷ 60 = 4 &nbsp;→&nbsp; 24 ÷ 60 = 0.4 &nbsp;→&nbsp; <strong>2.4 ÷ 60 = 0.04</strong> ✓</p>
+      </div>
+    </div>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>2400 ÷ 60 = 40</td><td>Dividend 10× grösser → Quotient 10× grösser</td></tr>
+        <tr class="row-b"><td>240 ÷ 60 = 4</td><td>Grundrechnung: 24 ÷ 6 = 4</td></tr>
+        <tr class="row-c"><td>24 ÷ 60 = 0.4</td><td>Dividend 10× kleiner → Quotient 10× kleiner</td></tr>
+        <tr class="row-hl"><td>2.4 ÷ 60 = 0.04</td><td>← Ziel ✓</td></tr>
+      </table>
+    </div>
+
+    <div class="callout merke" style="margin-top:14px">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Einheiten denken – der schnelle Weg</strong>
+        <p>240 Hundertstel ÷ 60 = 4 Hundertstel = <strong>0.04</strong><br>
+        Frage: «Wie viele Hundertstel (oder Tausendstel) stecken da drin?»</p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px"><strong>Beispiel: 3500 ÷ 50 als Rechnungsfolge:</strong></p>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-a"><td>3500 ÷ 50 = 70</td><td></td></tr>
+        <tr class="row-b"><td>350 ÷ 50 = 7</td><td></td></tr>
+        <tr class="row-c"><td>35 ÷ 50 = 0.7</td><td></td></tr>
+        <tr class="row-hl"><td>3.5 ÷ 50 = 0.07</td><td>← Ziel ✓</td></tr>
+        <tr class="row-d"><td>0.35 ÷ 50 = 0.007</td><td>noch 10× kleiner</td></tr>
+      </table>
+    </div>
+
+    <div class="callout tipp" style="margin-top:14px">
+      <span class="callout-icon">💡</span>
+      <div>
+        <strong>Zwei nützliche Rechenwege</strong>
+        <p><strong>Weg 1:</strong> 64 ÷ 8 = 8 &nbsp;→&nbsp; 64 ÷ 80 = 0.8 &nbsp;(nur 8 ÷ 10)<br>
+        <strong>Weg 2:</strong> 64 ÷ 10 = 6.4 &nbsp;→&nbsp; 6.4 ÷ 8 = 0.8 &nbsp;(erst teilen, dann teilen)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Flip Cards -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>🃏 Lernkarten</h3>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.28 ÷ 4 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.07</div><div class="fexp">28 Hst ÷ 4 = 7 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.045 ÷ 5 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.009</div><div class="fexp">45 Tsd ÷ 5 = 9 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">2.1 ÷ 70 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.03</div><div class="fexp">21 ÷ 7 = 3 → 10× kleiner</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">18 ÷ 20 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.9</div><div class="fexp">180 ÷ 20 = 9 → 10× kleiner</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.36 ÷ 9 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.04</div><div class="fexp">36 Hst ÷ 9 = 4 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">5.6 ÷ 80 = ?</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.07</div><div class="fexp">56 ÷ 8 = 7 → dann ÷10</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Fill-in -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>✍️ Divisionen ausrechnen</h3>
+    <div id="fill-div"></div>
+    <button class="fill-check" style="background:#3abd84" onclick="checkFill('div')">Überprüfen ✓</button>
+    <div class="score-bar" id="score-div" style="display:none">
+      <span class="score-num" id="sn-div">–</span>
+      <span class="score-txt" id="st-div">Punkte</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     5. ERGÄNZEN
+================================================== -->
+<section id="ergaenzen" class="chapter reveal">
+  <div class="chapter-header ch-erg">
+    <div class="ch-icon">🎯</div>
+    <div class="ch-text">
+      <h2>Ergänzen auf Zehnerpotenzen</h2>
+      <p>Wie viel fehlt noch bis zur nächsten «runden» Zahl?</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-label lbl-theorie">📖 Theorie</span>
+    <h3>Auf 1 ergänzen</h3>
+    <p>Zwei Schülerinnen und Schüler spielen mit Stellenwertkarten: Einer zieht zwei Karten und bildet eine Dezimalzahl – der andere muss sagen, was fehlt bis zur 1.</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 0.63 + ? = 1</strong>
+        <p>Denke: 63 Hundertstel + ? = 100 Hundertstel<br>
+        100 − 63 = 37 &nbsp;→&nbsp; <strong>0.63 + 0.37 = 1</strong> ✓</p>
+      </div>
+    </div>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-hl"><td>0.63 + 0.37 = 1</td><td>63 + 37 = 100 Hst ✓</td></tr>
+        <tr class="row-b"><td>0.81 + 0.19 = 1</td><td>81 + 19 = 100 Hst</td></tr>
+        <tr class="row-c"><td>0.184 + 0.816 = 1</td><td>184 + 816 = 1000 Tsd</td></tr>
+        <tr class="row-d"><td>0.029 + 0.071 = 0.1</td><td>29 + 71 = 100 Tsd = 0.1</td></tr>
+      </table>
+    </div>
+
+    <h3 style="margin-top:22px">Auf 10 ergänzen</h3>
+    <p>Beim Ergänzen auf 10 kombinierst du: Erst auf die nächste Zahl, dann weiter bis 10.</p>
+    <div class="callout beispiel">
+      <span class="callout-icon">🔍</span>
+      <div>
+        <strong>Beispiel: 4.2 + ? = 10</strong>
+        <p>Strategie: 4.2 → 5 (+ 0.8) → 10 (+ 5)<br>
+        0.8 + 5 = <strong>5.8</strong> &nbsp;→&nbsp; 4.2 + 5.8 = 10 ✓</p>
+      </div>
+    </div>
+    <div class="analog-wrap">
+      <table class="analog-tbl">
+        <tr class="row-hl"><td>4.2 + 5.8 = 10</td><td>42 + 58 = 100 Zt ✓</td></tr>
+        <tr class="row-b"><td>7.14 + 2.86 = 10</td><td>714 + 286 = 1000 Hst</td></tr>
+        <tr class="row-c"><td>1.8 + 8.2 = 10</td><td>18 + 82 = 100 Zt</td></tr>
+      </table>
+    </div>
+
+    <div class="callout merke" style="margin-top:14px">
+      <span class="callout-icon">⭐</span>
+      <div>
+        <strong>Die universelle Strategie</strong>
+        <p>Wandle die Dezimalzahl in Einheiten um:<br>
+        <strong>0.916</strong> = 916 Tausendstel &nbsp;→&nbsp; 1000 − 916 = 84 &nbsp;→&nbsp; Ergänzung: <strong>0.084</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Flip Cards -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>🃏 Lernkarten – Ergänzen</h3>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.47 + ? = 1</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.53</div><div class="fexp">47 + 53 = 100 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.916 + ? = 1</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.084</div><div class="fexp">916 + 84 = 1000 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.498 + ? = 1</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.502</div><div class="fexp">498 + 502 = 1000 Tsd</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">1.8 + ? = 10</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">8.2</div><div class="fexp">18 + 82 = 100 Zt</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">6.25 + ? = 10</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">3.75</div><div class="fexp">625 + 375 = 1000 Hst</div></div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-f"><div class="fq">0.029 + ? = 0.1</div><div class="fhint">👆 Tippe!</div></div>
+          <div class="flip-b"><div class="fans">0.071</div><div class="fexp">29 + 71 = 100 Tsd</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÜBUNG: Fill-in -->
+  <div class="card">
+    <span class="card-label lbl-uebung">✏️ Übung</span>
+    <h3>✍️ Ergänze auf 1 oder 10</h3>
+    <div id="fill-erg"></div>
+    <button class="fill-check" style="background:var(--c5)" onclick="checkFill('erg')">Überprüfen ✓</button>
+    <div class="score-bar" id="score-erg" style="display:none">
+      <span class="score-num" id="sn-erg">–</span>
+      <span class="score-txt" id="st-erg">Punkte</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================
+     GEMISCHTES QUIZ
+================================================== -->
+<section id="quiz" class="chapter reveal">
+  <div class="chapter-header" style="background:linear-gradient(135deg,#1e2a3a,#2d3f55);color:white;">
+    <div class="ch-icon" style="background:linear-gradient(135deg,#f39c12,#e74c3c);font-size:1.6rem;">🏆</div>
+    <div class="ch-text">
+      <h2 style="color:white;font-family:'Fredoka One',cursive;">Grosses Abschluss-Quiz</h2>
+      <p style="color:rgba(255,255,255,.7)">25 gemischte Aufgaben aus allen Rechenarten – zeig, was du kannst!</p>
+    </div>
+  </div>
+
+  <!-- Quiz Intro -->
+  <div id="quiz-intro" class="card" style="text-align:center;padding:36px 28px;">
+    <div style="font-size:3.5rem;margin-bottom:16px">🧠</div>
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.5rem;margin-bottom:10px">Bereit für die Herausforderung?</h3>
+    <p style="color:var(--muted);margin-bottom:8px">Das Quiz enthält <strong>25 Aufgaben</strong> aus allen Bereichen:</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:16px 0 28px">
+      <span style="background:#fde8e8;color:#c0392b;padding:6px 14px;border-radius:20px;font-weight:800;font-size:.88rem">➕ Addition</span>
+      <span style="background:#dff4f2;color:#2a9d96;padding:6px 14px;border-radius:20px;font-weight:800;font-size:.88rem">➖ Subtraktion</span>
+      <span style="background:#fdebd0;color:#c07a1a;padding:6px 14px;border-radius:20px;font-weight:800;font-size:.88rem">✖️ Multiplikation</span>
+      <span style="background:#d4f5e3;color:#1a7a45;padding:6px 14px;border-radius:20px;font-weight:800;font-size:.88rem">➗ Division</span>
+      <span style="background:#e8d5f5;color:#6a2e9a;padding:6px 14px;border-radius:20px;font-weight:800;font-size:.88rem">🎯 Ergänzen</span>
+    </div>
+    <button onclick="startQuiz()" style="
+      background:linear-gradient(135deg,#f39c12,#e74c3c);color:white;border:none;
+      border-radius:16px;padding:16px 40px;font-family:'Fredoka One',cursive;
+      font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(231,76,60,.35);
+      transition:transform .2s,box-shadow .2s;
+    " onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(231,76,60,.45)'"
+       onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(231,76,60,.35)'">
+      🚀 Quiz starten!
+    </button>
+  </div>
+
+  <!-- Quiz Progress Bar (während Quiz) -->
+  <div id="quiz-progress-wrap" style="display:none" class="card" style="padding:16px 24px">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-family:'Fredoka One',cursive;font-size:1rem;white-space:nowrap">Frage <span id="qpCur">1</span> / 25</span>
+      <div style="flex:1;min-width:100px;background:#eee;border-radius:30px;height:12px;overflow:hidden">
+        <div id="qpBar" style="height:100%;background:linear-gradient(90deg,#f39c12,#e74c3c);border-radius:30px;transition:width .4s ease;width:0%"></div>
+      </div>
+      <span id="qpScore" style="font-family:'Fredoka One',cursive;color:#27ae60;font-size:1rem;white-space:nowrap">✅ 0 richtig</span>
+    </div>
+  </div>
+
+  <!-- Quiz Questions Container -->
+  <div id="quiz-container" style="display:none"></div>
+
+  <!-- Auswertung -->
+  <div id="quiz-result" style="display:none"></div>
+</section>
+
+<!-- PRINT -->
+<div class="print-zone">
+  <button class="pbtn" onclick="window.print()">🖨️ Seite drucken (DIN A4)</button>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ================================================
+// FILL-IN DATA
+// ================================================
+const fillData = {
+  add:[
+    {eq:'560 + 120 = ',   ans:'680'},
+    {eq:'56 + 12 = ',     ans:'68'},
+    {eq:'5.6 + 1.2 = ',   ans:'6.8'},
+    {eq:'0.56 + 0.12 = ', ans:'0.68'},
+    {eq:'0.056 + 0.012 = ',ans:'0.068'},
+    {eq:'6.09 + 0.18 = ', ans:'6.27'},
+    {eq:'0.063 + 0.074 = ',ans:'0.137'},
+    {eq:'0.895 + 0.006 = ',ans:'0.901'},
+  ],
+  sub:[
+    {eq:'81 − 35 = ',      ans:'46'},
+    {eq:'8.1 − 3.5 = ',    ans:'4.6'},
+    {eq:'0.81 − 0.35 = ',  ans:'0.46'},
+    {eq:'0.51 − 0.39 = ',  ans:'0.12'},
+    {eq:'0.802 − 0.005 = ',ans:'0.797'},
+    {eq:'4.039 − 0.019 = ',ans:'4.02'},
+    {eq:'0.72 − 0.51 = ',  ans:'0.21'},
+    {eq:'0.503 − 0.005 = ',ans:'0.498'},
+  ],
+  mult:[
+    {eq:'600 · 3 = ',      ans:'1800'},
+    {eq:'600 · 0.3 = ',    ans:'180'},
+    {eq:'600 · 0.03 = ',   ans:'18'},
+    {eq:'600 · 0.003 = ',  ans:'1.8'},
+    {eq:'5 · 0.008 = ',    ans:'0.04'},
+    {eq:'3 · 0.7 = ',      ans:'2.1'},
+    {eq:'20 · 0.09 = ',    ans:'1.8'},
+    {eq:'800 · 0.003 = ',  ans:'2.4'},
+  ],
+  div:[
+    {eq:'240 ÷ 60 = ',     ans:'4'},
+    {eq:'24 ÷ 60 = ',      ans:'0.4'},
+    {eq:'2.4 ÷ 60 = ',     ans:'0.04'},
+    {eq:'0.28 ÷ 4 = ',     ans:'0.07'},
+    {eq:'18 ÷ 20 = ',      ans:'0.9'},
+    {eq:'2.1 ÷ 70 = ',     ans:'0.03'},
+    {eq:'0.045 ÷ 5 = ',    ans:'0.009'},
+    {eq:'0.36 ÷ 9 = ',     ans:'0.04'},
+  ],
+  erg:[
+    {eq:'0.47 + ____ = 1',  ans:'0.53'},
+    {eq:'0.81 + ____ = 1',  ans:'0.19'},
+    {eq:'0.06 + ____ = 1',  ans:'0.94'},
+    {eq:'0.916 + ____ = 1', ans:'0.084'},
+    {eq:'0.498 + ____ = 1', ans:'0.502'},
+    {eq:'1.8 + ____ = 10',  ans:'8.2'},
+    {eq:'6.25 + ____ = 10', ans:'3.75'},
+    {eq:'0.029 + ____ = 0.1',ans:'0.071'},
+  ]
+};
+
+function buildFills(){
+  Object.keys(fillData).forEach(key=>{
+    const c=document.getElementById('fill-'+key);
+    if(!c)return;
+    c.innerHTML='';
+    fillData[key].forEach((item,i)=>{
+      const saved=localStorage.getItem(`f_${key}_${i}`)||'';
+      const [before,after]=item.eq.includes('____')
+        ?item.eq.split('____')
+        :[item.eq,''];
+      const div=document.createElement('div');
+      div.className='fill-row';
+      div.innerHTML=`<div class="fill-eq">
+        <span>${before}</span>
+        <input class="fill-in" id="fi-${key}-${i}" data-ans="${item.ans}" value="${saved}"
+          oninput="localStorage.setItem('f_${key}_${i}',this.value)"
+          onkeydown="if(event.key==='Enter')checkFill('${key}')">
+        ${after?`<span>${after}</span>`:''}
+      </div>`;
+      c.appendChild(div);
+    });
+  });
+  updateTotal();
+}
+
+let scores={add:null,sub:null,mult:null,div:null,erg:null};
+
+function checkFill(key){
+  const data=fillData[key];
+  let ok=0;
+  data.forEach((item,i)=>{
+    const inp=document.getElementById(`fi-${key}-${i}`);
+    if(!inp)return;
+    inp.classList.remove('ok','err');
+    const val=inp.value.trim().replace(',','.');
+    const ans=item.ans.replace(',','.');
+    if(val===ans){inp.classList.add('ok');ok++;}
+    else if(val){inp.classList.add('err');}
+  });
+  scores[key]=ok;
+  const bar=document.getElementById('score-'+key);
+  bar.style.display='flex';
+  const total=data.length;
+  const pct=Math.round(ok/total*100);
+  document.getElementById('sn-'+key).textContent=ok+' / '+total;
+  document.getElementById('sn-'+key).style.color=ok===total?'#27ae60':(ok>total/2?'var(--c6)':'var(--c1)');
+  document.getElementById('st-'+key).textContent=
+    ok===total?'🎉 Perfekt! Alles richtig!':
+    ok>total/2?'👍 Gut gemacht! Kontrolliere die roten Felder.':
+    '💪 Schau nochmal in den Theorieteil!';
+  updateTotal();
+}
+
+// ================================================
+// QUIZ
+// ================================================
+function ansQ(btn,val,correct,expl){
+  const qblock=btn.closest('.quiz-block');
+  qblock.querySelectorAll('.qopt').forEach(b=>{b.classList.add('disabled');b.onclick=null});
+  const fbId='qfb-'+btn.closest('[id]')?.id.replace('qfb-','');
+  // find feedback sibling
+  const fb=qblock.querySelector('.qfeedback');
+  if(val===correct){
+    btn.classList.add('correct');
+    fb.className='qfeedback show ok';
+    fb.innerHTML='✅ '+expl;
+  } else {
+    btn.classList.add('wrong');
+    fb.className='qfeedback show fail';
+    fb.innerHTML='❌ '+expl;
+    qblock.querySelectorAll('.qopt').forEach(b=>{
+      if(b.textContent.trim()===correct)b.classList.add('correct');
+    });
+  }
+  updateTotal();
+}
+
+// ================================================
+// PROGRESS
+// ================================================
+function updateTotal(){
+  let totalOk=0,totalAll=0;
+  Object.keys(fillData).forEach(key=>{
+    totalAll+=fillData[key].length;
+    if(scores[key]!==null)totalOk+=scores[key];
+  });
+  document.getElementById('fsOk').textContent=totalOk;
+  document.getElementById('fsTotal').textContent=totalAll;
+  const pct=Math.round(totalOk/totalAll*100);
+  document.getElementById('fsBar').style.width=pct+'%';
+  const stars=pct>=80?'⭐⭐⭐⭐⭐':pct>=60?'⭐⭐⭐⭐':pct>=40?'⭐⭐⭐':pct>=20?'⭐⭐':'⭐';
+  document.getElementById('fsStars').textContent=stars;
+}
+
+// ================================================
+// SCROLL REVEAL
+// ================================================
+function initReveal(){
+  const els=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+  },{threshold:.06});
+  els.forEach(e=>io.observe(e));
+}
+
+// ================================================
+// ACTIVE NAV
+// ================================================
+function initNav(){
+  const sections=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.snav a');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.snav a[data-id="${e.target.id}"]`);
+        if(a){a.classList.add('active');a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+      }
+    });
+  },{threshold:.3});
+  sections.forEach(s=>io.observe(s));
+}
+
+// ================================================
+// RESTORE SAVED
+// ================================================
+function restoreSaved(){
+  Object.keys(fillData).forEach(key=>{
+    fillData[key].forEach((_,i)=>{
+      const v=localStorage.getItem(`f_${key}_${i}`);
+      const inp=document.getElementById(`fi-${key}-${i}`);
+      if(inp&&v)inp.value=v;
+    });
+  });
+}
+
+// ================================================
+// ABSCHLUSS-QUIZ
+// ================================================
+const QUIZ_QUESTIONS = [
+  // ── ADDITION (6) ─────────────────────────────
+  {cat:'➕ Addition',      q:'0.56 + 0.12 = ?',         a:'0.68',  opts:['0.78','0.68','6.8','0.068'],   hint:'56 + 12 = 68 Hundertstel'},
+  {cat:'➕ Addition',      q:'2.851 + 0.026 = ?',        a:'2.877', opts:['2.977','2.877','2.857','3.877'],hint:'2851 + 26 = 2877 Tausendstel'},
+  {cat:'➕ Addition',      q:'0.063 + 0.074 = ?',        a:'0.137', opts:['0.237','0.037','0.137','1.37'], hint:'63 + 74 = 137 Hundertstel'},
+  {cat:'➕ Addition',      q:'5.6 + 1.2 = ?',            a:'6.8',   opts:['6.8','7.8','0.68','68'],        hint:'56 + 12 = 68 Zehntel'},
+  {cat:'➕ Addition',      q:'0.895 + 0.006 = ?',        a:'0.901', opts:['0.891','0.961','0.901','1.001'],hint:'895 + 6 = 901 Tausendstel'},
+  {cat:'➕ Addition',      q:'0.742 + 0.09 = ?',         a:'0.832', opts:['0.842','0.732','0.832','0.0832'],hint:'742 + 90 = 832 Tausendstel'},
+
+  // ── SUBTRAKTION (5) ──────────────────────────
+  {cat:'➖ Subtraktion',   q:'0.81 − 0.35 = ?',          a:'0.46',  opts:['0.54','0.46','0.36','4.6'],     hint:'81 − 35 = 46 Hundertstel'},
+  {cat:'➖ Subtraktion',   q:'4.039 − 0.019 = ?',        a:'4.02',  opts:['4.02','4.20','4.058','3.020'],  hint:'4039 − 19 = 4020 Tausendstel'},
+  {cat:'➖ Subtraktion',   q:'0.802 − 0.005 = ?',        a:'0.797', opts:['0.803','0.757','0.797','0.807'],hint:'802 − 5 = 797 Tausendstel'},
+  {cat:'➖ Subtraktion',   q:'8.1 − 3.5 = ?',            a:'4.6',   opts:['4.6','5.6','4.4','46'],         hint:'81 − 35 = 46 Zehntel'},
+  {cat:'➖ Subtraktion',   q:'0.503 − 0.005 = ?',        a:'0.498', opts:['0.498','0.508','0.598','0.488'],hint:'503 − 5 = 498 Tausendstel'},
+
+  // ── MULTIPLIKATION (7) ───────────────────────
+  {cat:'✖️ Multiplikation',q:'600 · 0.003 = ?',          a:'1.8',   opts:['18','0.18','180','1.8'],        hint:'600 · 3 = 1800 Tausendstel = 1.8'},
+  {cat:'✖️ Multiplikation',q:'5 · 0.008 = ?',            a:'0.04',  opts:['0.4','4','0.004','0.04'],       hint:'5 · 8 Tausendstel = 40 Tausendstel'},
+  {cat:'✖️ Multiplikation',q:'40 · 0.07 = ?',            a:'2.8',   opts:['0.28','28','280','2.8'],        hint:'40 · 7 = 280 Hundertstel = 2.8'},
+  {cat:'✖️ Multiplikation',q:'3 · 0.7 = ?',              a:'2.1',   opts:['0.21','21','2.1','0.021'],      hint:'3 · 7 Zehntel = 21 Zehntel = 2.1'},
+  {cat:'✖️ Multiplikation',q:'800 · 0.003 = ?',          a:'2.4',   opts:['24','2.4','0.24','240'],        hint:'800 · 3 = 2400 Tausendstel = 2.4'},
+  {cat:'✖️ Multiplikation',q:'0.05 · 500 = ?',           a:'25',    opts:['2.5','250','0.25','25'],        hint:'5 Hundertstel · 500 = 2500 Hundertstel = 25'},
+  {cat:'✖️ Multiplikation',q:'20 · 0.09 = ?',            a:'1.8',   opts:['0.18','18','1.8','180'],        hint:'20 · 9 = 180 Hundertstel = 1.8'},
+
+  // ── DIVISION (4) ─────────────────────────────
+  {cat:'➗ Division',       q:'2.4 ÷ 60 = ?',             a:'0.04',  opts:['0.4','0.004','0.04','4'],       hint:'240 Hundertstel ÷ 60 = 4 Hundertstel'},
+  {cat:'➗ Division',       q:'0.28 ÷ 4 = ?',             a:'0.07',  opts:['0.7','7','0.007','0.07'],       hint:'28 Hundertstel ÷ 4 = 7 Hundertstel'},
+  {cat:'➗ Division',       q:'18 ÷ 20 = ?',              a:'0.9',   opts:['9','0.09','90','0.9'],          hint:'180 Zehntel ÷ 20 = 9 Zehntel = 0.9'},
+  {cat:'➗ Division',       q:'0.045 ÷ 5 = ?',            a:'0.009', opts:['0.9','0.09','0.009','0.0009'],  hint:'45 Tausendstel ÷ 5 = 9 Tausendstel'},
+
+  // ── ERGÄNZEN (3) ─────────────────────────────
+  {cat:'🎯 Ergänzen',       q:'0.47 + ? = 1',             a:'0.53',  opts:['0.63','0.43','0.53','0.57'],    hint:'47 + 53 = 100 Hundertstel'},
+  {cat:'🎯 Ergänzen',       q:'0.916 + ? = 1',            a:'0.084', opts:['0.184','0.094','0.084','0.074'],hint:'916 + 84 = 1000 Tausendstel'},
+  {cat:'🎯 Ergänzen',       q:'1.8 + ? = 10',             a:'8.2',   opts:['8.8','9.2','7.2','8.2'],        hint:'18 + 82 = 100 Zehntel'},
+];
+
+// shuffle helper
+function shuffle(arr){return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v)}
+
+let qState = {
+  questions: [],
+  current: 0,
+  answers: [],   // {correct:bool, cat, hint}
+  started: false
+};
+
+function startQuiz(){
+  qState.questions = shuffle([...QUIZ_QUESTIONS]);
+  qState.current   = 0;
+  qState.answers   = [];
+  qState.started   = true;
+
+  document.getElementById('quiz-intro').style.display          = 'none';
+  document.getElementById('quiz-progress-wrap').style.display  = 'block';
+  document.getElementById('quiz-container').style.display      = 'block';
+  document.getElementById('quiz-result').style.display         = 'none';
+
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const idx  = qState.current;
+  const total = qState.questions.length;
+  const q    = qState.questions[idx];
+
+  // progress bar
+  document.getElementById('qpCur').textContent  = idx + 1;
+  document.getElementById('qpBar').style.width  = Math.round(idx / total * 100) + '%';
+  const okSoFar = qState.answers.filter(a=>a.correct).length;
+  document.getElementById('qpScore').textContent = '✅ ' + okSoFar + ' richtig';
+
+  // shuffle answer options each render
+  const opts = shuffle([...q.opts]);
+
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = `
+  <div class="card" style="animation:fadeSlide .35s ease">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+      <span style="background:#f0f4f8;border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:800;color:var(--muted)">${idx+1} / ${total}</span>
+      <span style="background:#f0f4f8;border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:800;color:var(--mid)">${q.cat}</span>
+    </div>
+    <div style="font-family:'Fredoka One',cursive;font-size:clamp(1.3rem,4vw,1.8rem);color:var(--dark);margin-bottom:22px;line-height:1.3">${q.q}</div>
+    <div class="quiz-opts" id="qopts-live" style="grid-template-columns:1fr 1fr">
+      ${opts.map(o=>`<button class="qopt" onclick="answerQuizLive(this,'${o.replace(/'/g,"\\'")}','${q.a.replace(/'/g,"\\'")}','${q.hint.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}
+    </div>
+    <div id="qfb-live" class="qfeedback"></div>
+    <div id="qnext" style="display:none;margin-top:16px;text-align:right">
+      <button onclick="nextQuestion()" style="
+        background:linear-gradient(135deg,#27ae60,#2ecc71);color:white;border:none;
+        border-radius:12px;padding:12px 28px;font-family:'Fredoka One',cursive;
+        font-size:1rem;cursor:pointer;box-shadow:0 4px 14px rgba(39,174,96,.3);
+        transition:transform .15s
+      " onmouseover="this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.transform=''">
+        ${idx + 1 < total ? 'Weiter →' : '🏁 Auswertung anzeigen'}
+      </button>
+    </div>
+  </div>`;
+}
+
+function answerQuizLive(btn, val, correct, hint, idx){
+  const parent = btn.closest('.card');
+  parent.querySelectorAll('.qopt').forEach(b=>{ b.classList.add('disabled'); b.onclick=null; });
+  const fb = document.getElementById('qfb-live');
+  const isCorrect = val === correct;
+
+  qState.answers.push({ correct: isCorrect, cat: qState.questions[idx].cat, hint });
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    fb.className = 'qfeedback show ok';
+    fb.innerHTML = '✅ Richtig! Super gemacht! – <em>' + hint + '</em>';
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'qfeedback show fail';
+    fb.innerHTML = '❌ Leider falsch. Richtige Antwort: <strong>' + correct + '</strong> – <em>' + hint + '</em>';
+    parent.querySelectorAll('.qopt').forEach(b=>{ if(b.textContent.trim()===correct) b.classList.add('correct'); });
+  }
+
+  // update progress score live
+  const okSoFar = qState.answers.filter(a=>a.correct).length;
+  document.getElementById('qpScore').textContent = '✅ ' + okSoFar + ' richtig';
+
+  document.getElementById('qnext').style.display = 'block';
+}
+
+function nextQuestion(){
+  qState.current++;
+  if(qState.current >= qState.questions.length){
+    showResult();
+  } else {
+    renderQuestion();
+    window.scrollTo({top: document.getElementById('quiz-container').offsetTop - 70, behavior:'smooth'});
+  }
+}
+
+function showResult(){
+  document.getElementById('quiz-progress-wrap').style.display = 'none';
+  document.getElementById('quiz-container').style.display     = 'none';
+
+  const answers = qState.answers;
+  const total   = answers.length;
+  const ok      = answers.filter(a=>a.correct).length;
+  const pct     = Math.round(ok / total * 100);
+
+  // per-category stats
+  const cats = {};
+  answers.forEach(a=>{
+    if(!cats[a.cat]) cats[a.cat] = {ok:0, total:0};
+    cats[a.cat].total++;
+    if(a.correct) cats[a.cat].ok++;
+  });
+
+  // wrong hints
+  const wrongHints = [...new Set(
+    answers.filter(a=>!a.correct).map(a=>a.hint)
+  )].slice(0,5);
+
+  // medal & message
+  let medal, mainMsg, mainColor;
+  if(pct >= 92){
+    medal='🥇'; mainMsg='Fantastisch – du bist ein Dezimalzahlen-Profi!'; mainColor='#f39c12';
+  } else if(pct >= 76){
+    medal='🥈'; mainMsg='Sehr gut! Du beherrschst den grössten Teil.'; mainColor='#95a5a6';
+  } else if(pct >= 60){
+    medal='🥉'; mainMsg='Gut gemacht! Mit etwas Übung schaffst du noch mehr.'; mainColor='#cd7f32';
+  } else if(pct >= 40){
+    medal='💪'; mainMsg='Du bist auf dem richtigen Weg – übe weiter!'; mainColor='#2980b9';
+  } else {
+    medal='📖'; mainMsg='Schau nochmal in die Theorie-Teile – du schaffst das!'; mainColor='#e74c3c';
+  }
+
+  // tips per weak category
+  const catTips = {
+    '➕ Addition':       'Beim Addieren hilft es, die Zahlen als Einheiten zu denken (z.B. Hundertstel + Hundertstel) oder eine analoge Rechnung mit ganzen Zahlen zu suchen.',
+    '➖ Subtraktion':    'Beim Subtrahieren: Suche eine analoge Rechnung mit ganzen Zahlen (z.B. 81 − 35 = 46) und leite daraus das Ergebnis ab.',
+    '✖️ Multiplikation': 'Bei der Multiplikation: Wenn ein Faktor 10× kleiner wird, wird auch das Produkt 10× kleiner. Schreibe eine Rechnungsfolge auf!',
+    '➗ Division':        'Bei der Division: Wenn der Dividend 10× kleiner wird, wird auch der Quotient 10× kleiner. Denke in Einheiten (z.B. Hundertstel ÷ Zahl).',
+    '🎯 Ergänzen':       'Beim Ergänzen: Wandle die Dezimalzahl in Einheiten um (z.B. 0.47 = 47 Hundertstel) und rechne dann: 100 − 47 = 53 → 0.53.',
+  };
+
+  const weakCats = Object.entries(cats)
+    .filter(([,v]) => v.ok / v.total < 0.7)
+    .map(([cat]) => cat);
+
+  // build cat bar html
+  const catBarsHtml = Object.entries(cats).map(([cat, v])=>{
+    const p = Math.round(v.ok/v.total*100);
+    const barColor = p>=80?'#27ae60':p>=50?'#f39c12':'#e74c3c';
+    return `
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+        <span style="font-weight:800;font-size:.95rem">${cat}</span>
+        <span style="font-weight:800;font-size:.9rem;color:${barColor}">${v.ok} / ${v.total}</span>
+      </div>
+      <div style="background:#eee;border-radius:20px;height:10px;overflow:hidden">
+        <div style="width:${p}%;height:100%;background:${barColor};border-radius:20px;transition:width .8s ease"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // tips html
+  const tipsHtml = weakCats.length === 0
+    ? `<div style="background:#eafaf1;border-radius:12px;padding:16px 20px;border-left:4px solid #27ae60">
+        <strong style="color:#1a7a45;display:block;margin-bottom:4px">🎉 Ausgezeichnet!</strong>
+        Du hast in allen Bereichen gut abgeschnitten. Weiter so!
+       </div>`
+    : weakCats.map(cat=>`
+      <div style="background:#fff9e6;border-radius:12px;padding:16px 20px;border-left:4px solid #f39c12;margin-bottom:10px">
+        <strong style="color:#a07010;display:block;margin-bottom:4px">💡 Tipp für ${cat}</strong>
+        <span style="font-size:.93rem;color:var(--mid)">${catTips[cat]||''}</span>
+      </div>`).join('');
+
+  // wrong hints html
+  const wrongHintsHtml = wrongHints.length ? `
+    <div style="margin-top:18px">
+      <h4 style="font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:12px;color:var(--dark)">🔍 Daran solltest du nochmal denken:</h4>
+      ${wrongHints.map(h=>`
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;padding:10px 14px;background:#f0f4f8;border-radius:10px">
+          <span style="font-size:1rem">📌</span>
+          <span style="font-size:.9rem;font-weight:600;color:var(--mid)">${h}</span>
+        </div>`).join('')}
+    </div>` : '';
+
+  const resEl = document.getElementById('quiz-result');
+  resEl.style.display = 'block';
+  resEl.innerHTML = `
+  <!-- BIG SCORE -->
+  <div class="card" style="text-align:center;padding:40px 28px;background:linear-gradient(135deg,#1e2a3a,#2d3f55);color:white;position:relative;overflow:hidden">
+    <div style="font-size:4rem;margin-bottom:10px;animation:bounceIn .6s ease">${medal}</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,8vw,4rem);line-height:1;margin-bottom:8px">
+      <span style="color:${mainColor}">${ok}</span>
+      <span style="color:rgba(255,255,255,.4);font-size:.55em"> / ${total}</span>
+    </div>
+    <div style="font-size:clamp(1rem,3vw,1.3rem);color:rgba(255,255,255,.6);margin-bottom:6px">${pct}% richtig beantwortet</div>
+    <div style="color:${mainColor};font-family:'Fredoka One',cursive;font-size:clamp(1.1rem,3vw,1.5rem);margin-top:14px">${mainMsg}</div>
+
+    <!-- Stars -->
+    <div style="font-size:2rem;margin-top:18px;letter-spacing:4px">
+      ${pct>=20?'⭐':'☆'}${pct>=40?'⭐':'☆'}${pct>=60?'⭐':'☆'}${pct>=80?'⭐':'☆'}${pct>=96?'⭐':'☆'}
+    </div>
+
+    <!-- confetti dots decoration -->
+    <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.12">
+      ${Array.from({length:20},(_,i)=>`<div style="position:absolute;width:8px;height:8px;border-radius:50%;
+        background:hsl(${i*37},80%,60%);
+        left:${Math.random()*100}%;top:${Math.random()*100}%;"></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- CATEGORY BREAKDOWN -->
+  <div class="card" style="margin-top:20px">
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.25rem;margin-bottom:18px">📊 Ergebnis nach Rechenart</h3>
+    ${catBarsHtml}
+  </div>
+
+  <!-- TIPPS -->
+  <div class="card" style="margin-top:20px">
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.25rem;margin-bottom:16px">🎯 Tipps für dich</h3>
+    ${tipsHtml}
+    ${wrongHintsHtml}
+  </div>
+
+  <!-- LERNPLAN -->
+  ${weakCats.length > 0 ? `
+  <div class="card" style="margin-top:20px;background:linear-gradient(135deg,#eaf4ff,#d6eaf8);border-left:5px solid #2980b9">
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.15rem;margin-bottom:12px;color:#1a5ab8">📚 Dein Lernplan</h3>
+    <ol style="padding-left:20px;margin:0">
+      <li style="margin-bottom:8px;font-weight:700;color:var(--mid)">Lies nochmal die Theorie-Teile der Bereiche, in denen du Fehler gemacht hast.</li>
+      <li style="margin-bottom:8px;font-weight:700;color:var(--mid)">Bearbeite die Lernkarten und Übungsaufgaben dieser Kapitel.</li>
+      <li style="margin-bottom:8px;font-weight:700;color:var(--mid)">Wenn du bereit bist: Starte das Quiz nochmal und versuche eine bessere Punktzahl!</li>
+    </ol>
+  </div>` : `
+  <div class="card" style="margin-top:20px;background:linear-gradient(135deg,#eafaf1,#d4f5e3);border-left:5px solid #27ae60">
+    <h3 style="font-family:'Fredoka One',cursive;font-size:1.15rem;margin-bottom:8px;color:#1a7a45">🚀 Was jetzt?</h3>
+    <p style="color:var(--mid);font-weight:700">Du hast alles toll gemeistert! Versuche, noch schneller zu werden – übe die Aufgaben, bis sie dir ganz leicht fallen. Du kannst auch härtere Aufgaben aus dem Schulbuch lösen!</p>
+  </div>`}
+
+  <!-- RETRY BUTTON -->
+  <div style="text-align:center;margin-top:28px">
+    <button onclick="retryQuiz()" style="
+      background:linear-gradient(135deg,#f39c12,#e74c3c);color:white;border:none;
+      border-radius:16px;padding:14px 36px;font-family:'Fredoka One',cursive;
+      font-size:1.1rem;cursor:pointer;box-shadow:0 6px 20px rgba(231,76,60,.3);
+      transition:transform .2s;
+    " onmouseover="this.style.transform='translateY(-3px)'"
+       onmouseout="this.style.transform=''">
+      🔄 Nochmal versuchen
+    </button>
+  </div>
+  `;
+
+  resEl.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function retryQuiz(){
+  document.getElementById('quiz-result').style.display     = 'none';
+  document.getElementById('quiz-progress-wrap').style.display = 'none';
+  document.getElementById('quiz-container').style.display  = 'none';
+  document.getElementById('quiz-intro').style.display      = 'block';
+  window.scrollTo({top: document.getElementById('quiz').offsetTop - 70, behavior:'smooth'});
+}
+
+// CSS animation for result card
+const styleTag = document.createElement('style');
+styleTag.textContent = `
+@keyframes fadeSlide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes bounceIn{0%{transform:scale(.3)}50%{transform:scale(1.1)}80%{transform:scale(.9)}100%{transform:scale(1)}}
+`;
+document.head.appendChild(styleTag);
+
+// ================================================
+// INIT
+// ================================================
+window.addEventListener('load',()=>{
+  buildFills();
+  restoreSaved();
+  initReveal();
+  initNav();
+  updateTotal();
+});
+</script>
+</body>
+</html>
