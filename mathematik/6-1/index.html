@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathe-Fuchs 6 | Interaktives Lernportal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-light">
+    <!-- Background Decor -->
+    <div class="bg-decor-1"></div>
+    <div class="bg-decor-2"></div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <div class="logo-icon">🦊</div>
+                <div class="logo-text">
+                    <h1>Mathe-Fuchs 6</h1>
+                    <p>Dein Begleiter durch die Mathematik</p>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <!-- Theme Switcher -->
+                <div class="theme-select-container">
+                    <label for="theme-select">🎨 Thema:</label>
+                    <select id="theme-select" class="theme-dropdown">
+                        <option value="light">☀️ Tagmodus</option>
+                        <option value="dark">🌙 Nachtmodus</option>
+                        <option value="galaxy">🌌 Weltall</option>
+                    </select>
+                </div>
+
+                <!-- Global Score/Progress -->
+                <div class="score-badge" title="Deine gesammelten Punkte!">
+                    <span class="score-emoji">🏆</span>
+                    <span id="global-score">0</span> Punkte
+                </div>
+            </div>
+        </header>
+
+        <!-- Layout Body -->
+        <div class="app-layout">
+            
+            <!-- Navigation -->
+            <nav class="app-nav">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span class="nav-icon">🏠</span> Dashboard
+                </button>
+                <div class="nav-divider">Themenbereiche</div>
+                <button class="nav-item" data-tab="theme-61">
+                    <span class="nav-icon">🍰</span> 6.1 Brüche & Teiler
+                </button>
+                <button class="nav-item" data-tab="theme-62">
+                    <span class="nav-icon">📐</span> 6.2 Raster & Winkel
+                </button>
+                <button class="nav-item" data-tab="theme-63">
+                    <span class="nav-icon">📊</span> 6.3 Dezimalzahlen
+                </button>
+                <div class="nav-divider">Fortschritt</div>
+                <div class="nav-progress-card">
+                    <p>Gesamtfortschritt</p>
+                    <div class="progress-bar-container">
+                        <div id="total-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <span id="total-progress-text">0% abgeschlossen</span>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="app-content">
+                
+                <!-- DASHBOARD TAB -->
+                <section id="tab-dashboard" class="tab-content active">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h2>Sali! Schön bist du da! 👋</h2>
+                            <p>Hier kannst du die wichtigsten Themen der 6. Klasse üben, nachschlagen und dein Wissen testen. Wähle unten ein Thema aus oder klicke links in der Navigation, um loszulegen!</p>
+                        </div>
+                        <div class="welcome-mascot">🦊</div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Card 6.1 -->
+                        <div class="topic-card card-61" data-target="theme-61">
+                            <div class="card-badge">Kapitel 6.1</div>
+                            <h3>Brüche, Teiler & Vielfache</h3>
+                            <p>Lerne Bruchteile zu zeichnen, Anteile zu berechnen und entdecke das Geheimnis der Primzahlen sowie ggT und kgV.</p>
+                            <div class="card-footer">
+                                <span class="card-action">Starten ➔</span>
+                                <span class="card-progress" id="progress-badge-61">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 6.2 -->
+                        <div class="topic-card card-62" data-target="theme-62">
+                            <div class="card-badge">Kapitel 6.2</div>
+                            <h3>Raster & Koordinaten</h3>
+                            <p>Zeichne im Koordinatensystem, finde Schätze auf der Landeskarte, berechne Massstäbe und miss Winkel wie ein Profi.</p>
+                            <div class="card-footer">
+                                <span class="card-action">Starten ➔</span>
+                                <span class="card-progress" id="progress-badge-62">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 6.3 -->
+                        <div class="topic-card card-63" data-target="theme-63">
+                            <div class="card-badge">Kapitel 6.3</div>
+                            <h3>Dezimalzahlen & Ordnen</h3>
+                            <p>Verstehe Kommazahlen auf dem Zahlenstrahl, verschiebe Werte auf der Stellenwerttafel und vergleiche Brüche.</p>
+                            <div class="card-footer">
+                                <span class="card-action">Starten ➔</span>
+                                <span class="card-progress" id="progress-badge-63">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>💡 Tipps für deinen Erfolg:</h4>
+                        <ul>
+                            <li>Nutze die <strong>interaktiven Modelle</strong>, um die Theorie besser zu verstehen. Du kannst Werte verschieben und siehst sofort die Auswirkung!</li>
+                            <li>Lies die Erklärungen im <strong>Nachschlagewerk</strong> durch, wenn du bei den Aufgaben im Themenbuch oder Arbeitsheft nicht weiterweisst.</li>
+                            <li>Schliesse die <strong>Quizze</strong> ab, um Punkte zu sammeln und dein Wissen zu überprüfen!</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- THEME 6.1 TAB -->
+                <section id="tab-theme-61" class="tab-content">
+                    <div class="theme-header header-61">
+                        <h2>Kapitel 6.1: Brüche, Teiler & Vielfache</h2>
+                        <p>Hier lernst du alles über das Darstellen von Brüchen, das Rechnen mit Anteilen, Primzahlen und das Kürzen & Erweitern.</p>
+                    </div>
+
+                    <!-- Sub-tabs navigation -->
+                    <div class="sub-tabs">
+                        <button class="sub-tab-item active" data-subtab="61-theory">📚 Nachschlagewerk</button>
+                        <button class="sub-tab-item" data-subtab="61-fraction-model">🍰 Bruchmodelle</button>
+                        <button class="sub-tab-item" data-subtab="61-primes">🔢 Primzahlsieb</button>
+                        <button class="sub-tab-item" data-subtab="61-ggt-kgv">🧮 ggT & kgV</button>
+                        <button class="sub-tab-item" data-subtab="61-quiz">📝 Quiz</button>
+                    </div>
+
+                    <!-- Sub-tab content: Theory -->
+                    <div id="subtab-61-theory" class="subtab-content active">
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h3>1. Was ist ein Bruch?</h3>
+                                <p>Ein Bruch teilt ein Ganzes in gleich grosse Teile auf.</p>
+                                <ul>
+                                    <li><strong>Zähler</strong> (oben): Sagt dir, wie viele Teile ausgewählt sind.</li>
+                                    <li><strong>Nenner</strong> (unten): Sagt dir, in wie viele Teile das Ganze insgesamt geteilt wurde.</li>
+                                </ul>
+                                <div class="fraction-illustration">
+                                    <div class="fraction-box">
+                                        <span class="numerator">3</span>
+                                        <span class="fraction-line"></span>
+                                        <span class="denominator">4</span>
+                                    </div>
+                                    <div class="fraction-desc">
+                                        <span>← Zähler (Wie viele?)</span>
+                                        <span>← Bruchstrich (geteilt durch)</span>
+                                        <span>← Nenner (Welche Teile?)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>2. Bruchteile von Grössen berechnen</h3>
+                                <p>Wenn du einen Anteil einer Zahl oder Grösse berechnen willst, dividierst du die Zahl durch den Nenner und multiplizierst das Ergebnis mit dem Zähler.</p>
+                                <div class="example-box">
+                                    <p><strong>Beispiel:</strong> Berechne <span class="frac">3</span>/<span class="frac">4</span> von 200 cm.</p>
+                                    <ol>
+                                        <li>Teile durch den Nenner: 200 cm : 4 = 50 cm</li>
+                                        <li>Multipliziere mit dem Zähler: 50 cm × 3 = <strong>150 cm</strong></li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>3. Teiler, Vielfache und Primzahlen</h3>
+                                <ul>
+                                    <li><strong>Teiler:</strong> Eine Zahl teilt eine andere Zahl ohne Rest. (Beispiel: Die Teiler von 6 sind 1, 2, 3, 6).</li>
+                                    <li><strong>Vielfache:</strong> Die Zahlen aus der Einmaleins-Reihe einer Zahl. (Beispiel: Die Vielfachen von 5 sind 5, 10, 15, 20, ...).</li>
+                                    <li><strong>Primzahl:</strong> Eine Zahl, die genau zwei Teiler hat: 1 und sich selbst. (Beispiel: 2, 3, 5, 7, 11, 13, 17, 19, ...). Die Zahl 1 ist <em>keine</em> Primzahl!</li>
+                                </ul>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>4. Erweitern und Kürzen</h3>
+                                <ul>
+                                    <li><strong>Erweitern:</strong> Zähler und Nenner mit der <em>gleichen</em> Zahl multiplizieren. Der Wert des Bruchs bleibt gleich gross!</li>
+                                    <li><strong>Kürzen:</strong> Zähler und Nenner durch die <em>gleiche</em> Zahl dividieren. Der Wert bleibt auch hier gleich gross!</li>
+                                </ul>
+                                <div class="example-box">
+                                    <p><strong>Erweitern mit 2:</strong> <span class="frac">1</span>/<span class="frac">2</span> = <span class="frac">1×2</span>/<span class="frac">2×2</span> = <span class="frac">2</span>/<span class="frac">4</span></p>
+                                    <p><strong>Kürzen mit 3:</strong> <span class="frac">3</span>/<span class="frac">9</span> = <span class="frac">3:3</span>/<span class="frac">9:3</span> = <span class="frac">1</span>/<span class="frac">3</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Fraction Model -->
+                    <div id="subtab-61-fraction-model" class="subtab-content">
+                        <div class="widget-layout">
+                            <div class="widget-controls">
+                                <h3>Interaktives Bruchmodell</h3>
+                                <p>Stelle einen Bruch ein und schaue dir an, wie er im Kreis-, Rechteck- und Streckenmodell aussieht!</p>
+                                
+                                <div class="control-group">
+                                    <label for="frac-numerator">Zähler (oben): <span id="val-numerator" class="badge-val">3</span></label>
+                                    <input type="range" id="frac-numerator" min="1" max="12" value="3" class="slider-control">
+                                </div>
+
+                                <div class="control-group">
+                                    <label for="frac-denominator">Nenner (unten): <span id="val-denominator" class="badge-val">4</span></label>
+                                    <input type="range" id="frac-denominator" min="1" max="12" value="4" class="slider-control">
+                                </div>
+
+                                <div class="math-display">
+                                    Bruch: <span class="huge-fraction"><span id="disp-num">3</span><span class="huge-fraction-line"></span><span id="disp-den">4</span></span>
+                                    = Dezimalzahl: <span id="disp-decimal" class="badge-val font-mono">0.75</span>
+                                </div>
+
+                                <div class="equivalent-box">
+                                    <h4>Gleichwertige Brüche (erweitert):</h4>
+                                    <p id="equivalent-fractions-list">6/8, 9/12, 12/16</p>
+                                </div>
+                            </div>
+
+                            <div class="widget-visuals">
+                                <div class="visual-card">
+                                    <h4>Kreismodell (Torte)</h4>
+                                    <div class="canvas-container">
+                                        <canvas id="canvas-circle" width="220" height="220"></canvas>
+                                    </div>
+                                </div>
+                                <div class="visual-card">
+                                    <h4>Rechteckmodell (Schokolade)</h4>
+                                    <div class="canvas-container">
+                                        <canvas id="canvas-rect" width="220" height="150"></canvas>
+                                    </div>
+                                </div>
+                                <div class="visual-card">
+                                    <h4>Streckenmodell (Zahlenstrahl)</h4>
+                                    <div class="canvas-container">
+                                        <canvas id="canvas-line" width="260" height="80"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Primes (Sieb des Eratosthenes) -->
+                    <div id="subtab-61-primes" class="subtab-content">
+                        <div class="primes-container">
+                            <div class="primes-sidebar">
+                                <h3>Sieb des Eratosthenes</h3>
+                                <p>Finde alle Primzahlen von 1 bis 100! Drücke die Tasten der Reihe nach, um Vielfache durchzustreichen. Was übrig bleibt, sind die Primzahlen.</p>
+                                
+                                <div class="primes-buttons">
+                                    <button id="btn-sieve-2" class="sieve-btn sieve-btn-2">Vielfache von 2 filtern</button>
+                                    <button id="btn-sieve-3" class="sieve-btn sieve-btn-3">Vielfache von 3 filtern</button>
+                                    <button id="btn-sieve-5" class="sieve-btn sieve-btn-5">Vielfache von 5 filtern</button>
+                                    <button id="btn-sieve-7" class="sieve-btn sieve-btn-7">Vielfache von 7 filtern</button>
+                                    <button id="btn-sieve-reset" class="sieve-btn-reset">Zurücksetzen</button>
+                                </div>
+
+                                <div class="primes-legend">
+                                    <div class="legend-item"><span class="legend-dot active-prime"></span>Primzahl</div>
+                                    <div class="legend-item"><span class="legend-dot crossed-out"></span>Gefiltert</div>
+                                    <div class="legend-item"><span class="legend-dot special-one"></span>Die Zahl 1</div>
+                                </div>
+                            </div>
+
+                            <div class="primes-grid-wrapper">
+                                <div id="primes-grid" class="primes-grid">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: GGT & KGV -->
+                    <div id="subtab-61-ggt-kgv" class="subtab-content">
+                        <div class="ggt-kgv-widget">
+                            <h3>Rechner für ggT und kgV</h3>
+                            <p>Gib zwei Zahlen ein und sieh dir Schritt für Schritt an, wie der grösste gemeinsame Teiler (ggT) und das kleinste gemeinsame Vielfache (kgV) bestimmt werden.</p>
+                            
+                            <div class="inputs-row">
+                                <div class="input-group">
+                                    <label for="num-a">Zahl A:</label>
+                                    <input type="number" id="num-a" value="12" min="1" max="500">
+                                </div>
+                                <div class="input-group">
+                                    <label for="num-b">Zahl B:</label>
+                                    <input type="number" id="num-b" value="18" min="1" max="500">
+                                </div>
+                                <button id="btn-calc-ggt-kgv" class="btn-primary">Berechnen</button>
+                            </div>
+
+                            <div class="results-container">
+                                <!-- ggT Card -->
+                                <div class="result-card">
+                                    <h4>Grösster gemeinsamer Teiler (ggT)</h4>
+                                    <div class="result-steps">
+                                        <p>Teiler von Zahl A (<span id="txt-ggt-a">12</span>): <br><span id="list-teiler-a" class="numbers-list">1, 2, 3, 4, 6, 12</span></p>
+                                        <p>Teiler von Zahl B (<span id="txt-ggt-b">18</span>): <br><span id="list-teiler-b" class="numbers-list">1, 2, 3, 6, 9, 18</span></p>
+                                        <p>Gemeinsame Teiler: <br><span id="list-teiler-common" class="numbers-list highlight">1, 2, 3, 6</span></p>
+                                        <p class="final-answer">ggT(<span id="ans-ggt-inputs">12, 18</span>) = <span id="ans-ggt" class="answer-badge">6</span></p>
+                                    </div>
+                                </div>
+
+                                <!-- kgV Card -->
+                                <div class="result-card">
+                                    <h4>Kleinstes gemeinsames Vielfaches (kgV)</h4>
+                                    <div class="result-steps">
+                                        <p>Vielfache von Zahl A (<span id="txt-kgv-a">12</span>): <br><span id="list-vielfache-a" class="numbers-list">12, 24, 36, 48, 60, 72, ...</span></p>
+                                        <p>Vielfache von Zahl B (<span id="txt-kgv-b">18</span>): <br><span id="list-vielfache-b" class="numbers-list">18, 36, 54, 72, 90, ...</span></p>
+                                        <p>Erste gemeinsame Vielfache: <br><span id="list-vielfache-common" class="numbers-list highlight">36, 72</span></p>
+                                        <p class="final-answer">kgV(<span id="ans-kgv-inputs">12, 18</span>) = <span id="ans-kgv" class="answer-badge">36</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Quiz 61 -->
+                    <div id="subtab-61-quiz" class="subtab-content">
+                        <div class="quiz-wrapper" id="quiz-61-container">
+                            <div class="quiz-intro">
+                                <h3>Bist du bereit für das Quiz? 🚀</h3>
+                                <p>Beantworte 5 Fragen zum Kapitel 6.1. Für jede richtige Antwort erhältst du Punkte! Sammle alle 5 Sterne für eine Überraschung.</p>
+                                <button id="btn-start-quiz-61" class="btn-primary">Quiz starten</button>
+                            </div>
+                            <!-- Quiz active view (hidden by default) -->
+                            <div class="quiz-active" style="display: none;">
+                                <div class="quiz-progress-bar">
+                                    <div class="quiz-progress-fill" id="quiz-61-progress" style="width: 0%"></div>
+                                </div>
+                                <div class="quiz-question-box">
+                                    <span class="question-number" id="quiz-61-qnum">Frage 1 von 5</span>
+                                    <h4 id="quiz-61-qtext">Wie lautet der Bruch für dieses Modell?</h4>
+                                    <div class="quiz-q-illustration" id="quiz-61-illustration"></div>
+                                    <div class="quiz-options" id="quiz-61-options">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Quiz result view (hidden by default) -->
+                            <div class="quiz-result" style="display: none;">
+                                <h3>Ergebnis</h3>
+                                <div class="stars-display" id="quiz-61-stars">⭐</div>
+                                <p id="quiz-61-result-text">Du hast 3 von 5 Fragen richtig beantwortet!</p>
+                                <p>Erhaltene Punkte: <span id="quiz-61-points" class="badge-val">30</span></p>
+                                <button id="btn-restart-quiz-61" class="btn-secondary">Nochmals versuchen</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- THEME 6.2 TAB -->
+                <section id="tab-theme-62" class="tab-content">
+                    <div class="theme-header header-62">
+                        <h2>Kapitel 6.2: Raster & Koordinaten</h2>
+                        <p>Entdecke die Welt der Geometrie: Koordinatensysteme, Winkel, Diagonalen von Vierecken und Massstäbe auf der Karte.</p>
+                    </div>
+
+                    <!-- Sub-tabs navigation -->
+                    <div class="sub-tabs">
+                        <button class="sub-tab-item active" data-subtab="62-theory">📚 Nachschlagewerk</button>
+                        <button class="sub-tab-item" data-subtab="62-coordinates">🗺️ Koordinatensystem</button>
+                        <button class="sub-tab-item" data-subtab="62-angles">📐 Winkel-Zeichner</button>
+                        <button class="sub-tab-item" data-subtab="62-scale">🧭 Landkarte & Massstab</button>
+                        <button class="sub-tab-item" data-subtab="62-quiz">📝 Quiz</button>
+                    </div>
+
+                    <!-- Sub-tab content: Theory -->
+                    <div id="subtab-62-theory" class="subtab-content active">
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h3>1. Das Koordinatensystem</h3>
+                                <p>Ein Koordinatensystem hilft uns, Punkte genau zu bestimmen.</p>
+                                <ul>
+                                    <li><strong>x-Achse:</strong> Die waagrechte Achse (nach rechts, auch "Rechtswert" genannt).</li>
+                                    <li><strong>y-Achse:</strong> Die senkrechte Achse (nach oben, auch "Hochwert" genannt).</li>
+                                    <li><strong>Dezimalwerte:</strong> Koordinaten können Kommas haben. Zum Beispiel liegt der Punkt (2.5, 4) genau in der Mitte zwischen 2 und 3 auf der x-Achse.</li>
+                                </ul>
+                                <div class="example-box">
+                                    <p><strong>Schreibweise:</strong> P(x | y) &rarr; Erst auf der x-Achse gehen, dann auf der y-Achse hoch!</p>
+                                </div>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>2. Winkel messen & zeichnen</h3>
+                                <p>Ein Winkel wird in Grad (°) gemessen. Ein ganzer Kreis hat 360°.</p>
+                                <ul>
+                                    <li><strong>Spitzer Winkel:</strong> zwischen 0° und 90°</li>
+                                    <li><strong>Rechter Winkel:</strong> genau 90°</li>
+                                    <li><strong>Stumpfer Winkel:</strong> zwischen 90° und 180°</li>
+                                    <li><strong>Gestreckter Winkel:</strong> genau 180°</li>
+                                    <li><strong>Überstumpfer Winkel:</strong> zwischen 180° und 360°</li>
+                                    <li><strong>Vollwinkel:</strong> genau 360°</li>
+                                </ul>
+                                <p><strong>Winkelsumme:</strong> In jedem Dreieck beträgt die Summe aller Winkel immer 180°. In jedem Viereck sind es immer 360°.</p>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>3. Eigenschaften der Diagonalen</h3>
+                                <p>Diagonalen verbinden gegenüberliegende Ecken eines Vierecks.</p>
+                                <ul>
+                                    <li><strong>Quadrat:</strong> Diagonalen sind gleich lang, halbieren sich gegenseitig und stehen senkrecht (90°) aufeinander.</li>
+                                    <li><strong>Rechteck:</strong> Diagonalen sind gleich lang, halbieren sich, stehen aber <em>nicht</em> senkrecht aufeinander.</li>
+                                    <li><strong>Rhombus:</strong> Diagonalen sind unterschiedlich lang, halbieren sich und stehen senkrecht aufeinander.</li>
+                                    <li><strong>Parallelogramm:</strong> Diagonalen sind unterschiedlich lang, halbieren sich, stehen <em>nicht</em> senkrecht aufeinander.</li>
+                                </ul>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>4. Massstab auf Landkarten</h3>
+                                <p>Der Massstab zeigt an, wie stark die Wirklichkeit verkleinert wurde.</p>
+                                <div class="example-box">
+                                    <p><strong>Massstab 1 : 25'000</strong></p>
+                                    <p>Das bedeutet: 1 cm auf der Karte entspricht 25'000 cm in Wirklichkeit.</p>
+                                    <p>25'000 cm = 250 m = 0.25 km.</p>
+                                    <p><em>Tipp:</em> Um von cm auf der Karte direkt in Meter umzurechnen, streiche einfach die letzten zwei Nullen beim Massstab!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Coordinates -->
+                    <div id="subtab-62-coordinates" class="subtab-content">
+                        <div class="widget-layout">
+                            <div class="widget-controls">
+                                <h3>Interaktives Koordinaten-Gitter</h3>
+                                <p>Klicke in das Gitter, um Punkte zu zeichnen. Setze mindestens drei Punkte, um eine Form zu erstellen!</p>
+                                <p class="small-info">Du kannst auch halbe Schritte wie 1.5, 2.5 oder 3.5 auf den Achsen anklicken.</p>
+                                
+                                <div class="coordinate-list-box">
+                                    <h4>Deine gesetzten Punkte:</h4>
+                                    <ul id="points-list-ul">
+                                        <li class="empty-list">Noch keine Punkte gesetzt.</li>
+                                    </ul>
+                                </div>
+
+                                <div id="shape-properties" class="equivalent-box" style="display: none;">
+                                    <h4>Form-Eigenschaften:</h4>
+                                    <p>Umfang: <span id="shape-perimeter" class="badge-val">0</span> Längeneinheiten</p>
+                                    <p>Fläche: <span id="shape-area" class="badge-val">0</span> Quadrateinheiten</p>
+                                </div>
+
+                                <div class="primes-buttons">
+                                    <button id="btn-clear-coords" class="sieve-btn-reset">Gitter leeren</button>
+                                </div>
+                            </div>
+
+                            <div class="widget-visuals">
+                                <div class="visual-card">
+                                    <h4>Koordinatensystem (0 bis 10)</h4>
+                                    <div class="canvas-container relative">
+                                        <canvas id="canvas-coordinates" width="400" height="400" style="background:#fff; border-radius: 8px; border: 1px solid #cbd5e1; cursor: crosshair;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Angles -->
+                    <div id="subtab-62-angles" class="subtab-content">
+                        <div class="widget-layout">
+                            <div class="widget-controls">
+                                <h3>Winkel-Simulator</h3>
+                                <p>Bewege den Schieberegler, um den Winkel zu verändern. Beobachte, wie der Winkel gezeichnet wird und wie seine Bezeichnung lautet.</p>
+                                
+                                <div class="control-group">
+                                    <label for="angle-slider">Winkel (&alpha;): <span id="val-angle" class="badge-val">45°</span></label>
+                                    <input type="range" id="angle-slider" min="0" max="360" value="45" class="slider-control">
+                                </div>
+
+                                <div class="math-display">
+                                    Winkelart: <span id="angle-type" class="badge-val text-primary" style="font-size: 1.2rem;">Spitzer Winkel</span>
+                                </div>
+
+                                <div class="info-card">
+                                    <h4>Was wissen wir über Winkel?</h4>
+                                    <p id="angle-info-text">Ein spitzer Winkel ist kleiner als ein rechter Winkel (90°).</p>
+                                </div>
+                            </div>
+
+                            <div class="widget-visuals">
+                                <div class="visual-card">
+                                    <h4>Winkel-Visualisierung</h4>
+                                    <div class="canvas-container">
+                                        <canvas id="canvas-angle" width="300" height="300"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Scale / Massstab -->
+                    <div id="subtab-62-scale" class="subtab-content">
+                        <div class="scale-widget">
+                            <h3>Massstabs- und Distanzrechner</h3>
+                            <p>Berechne die Entfernungen auf Landkarten oder in der Wirklichkeit. Wähle den Massstab aus und trage einen bekannten Wert ein.</p>
+                            
+                            <div class="scale-box">
+                                <div class="control-group">
+                                    <label for="scale-select">Massstab der Karte:</label>
+                                    <select id="scale-select" class="theme-dropdown">
+                                        <option value="25000">1 : 25'000 (Wanderkarte - 1 cm = 250 m)</option>
+                                        <option value="50000">1 : 50'000 (Landeskarte - 1 cm = 500 m)</option>
+                                        <option value="100000">1 : 100'000 (Übersichtskarte - 1 cm = 1 km)</option>
+                                        <option value="1000000">1 : 1'000'000 (Weltkarte - 1 cm = 10 km)</option>
+                                    </select>
+                                </div>
+
+                                <div class="calculator-inputs">
+                                    <div class="calc-card">
+                                        <h4>Strecke auf der Karte (cm)</h4>
+                                        <input type="number" id="scale-map-input" value="4" min="0" step="0.1" class="calc-input">
+                                        <span class="calc-arrow">&rarr; entspricht in Realität &rarr;</span>
+                                    </div>
+
+                                    <div class="calc-card">
+                                        <h4>Strecke in Wirklichkeit</h4>
+                                        <div class="reality-outputs">
+                                            <p><input type="number" id="scale-real-m" value="1000" min="0" class="calc-input-small"> Meter (m)</p>
+                                            <p><input type="number" id="scale-real-km" value="1.0" min="0" step="0.01" class="calc-input-small"> Kilometer (km)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tips-box" style="margin-top: 1.5rem; background: rgba(14, 165, 233, 0.05);">
+                                    <p>💡 <strong>Rechenweg:</strong> Karte &rarr; Realität: Karte in cm mit Massstab multiplizieren. Dann umrechnen: :100 für Meter, :100'000 für Kilometer.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Quiz 62 -->
+                    <div id="subtab-62-quiz" class="subtab-content">
+                        <div class="quiz-wrapper" id="quiz-62-container">
+                            <div class="quiz-intro">
+                                <h3>Geometrie-Quiz starten! 🗺️</h3>
+                                <p>Teste dein Wissen zu Koordinaten, Winkeln und Massstäben. Beantworte 5 knifflige Fragen und sichere dir deine Punkte!</p>
+                                <button id="btn-start-quiz-62" class="btn-primary">Quiz starten</button>
+                            </div>
+                            <!-- Quiz active view (hidden by default) -->
+                            <div class="quiz-active" style="display: none;">
+                                <div class="quiz-progress-bar">
+                                    <div class="quiz-progress-fill" id="quiz-62-progress" style="width: 0%"></div>
+                                </div>
+                                <div class="quiz-question-box">
+                                    <span class="question-number" id="quiz-62-qnum">Frage 1 von 5</span>
+                                    <h4 id="quiz-62-qtext">Welcher Punkt ist markiert?</h4>
+                                    <div class="quiz-q-illustration" id="quiz-62-illustration"></div>
+                                    <div class="quiz-options" id="quiz-62-options">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Quiz result view (hidden by default) -->
+                            <div class="quiz-result" style="display: none;">
+                                <h3>Ergebnis</h3>
+                                <div class="stars-display" id="quiz-62-stars">⭐</div>
+                                <p id="quiz-62-result-text">Du hast 4 von 5 Fragen richtig beantwortet!</p>
+                                <p>Erhaltene Punkte: <span id="quiz-62-points" class="badge-val">40</span></p>
+                                <button id="btn-restart-quiz-62" class="btn-secondary">Nochmals versuchen</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- THEME 6.3 TAB -->
+                <section id="tab-theme-63" class="tab-content">
+                    <div class="theme-header header-63">
+                        <h2>Kapitel 6.3: Dezimalzahlen & Brüche vergleichen</h2>
+                        <p>Lerne Dezimalzahlen (Kommazahlen) kennen, ordne sie auf dem Zahlenstrahl ein und nutze die Stellenwerttafel für Multiplikationen.</p>
+                    </div>
+
+                    <!-- Sub-tabs navigation -->
+                    <div class="sub-tabs">
+                        <button class="sub-tab-item active" data-subtab="63-theory">📚 Nachschlagewerk</button>
+                        <button class="sub-tab-item" data-subtab="63-zahlenstrahl">📏 Zahlenstrahl</button>
+                        <button class="sub-tab-item" data-subtab="63-stellenwert">🧮 Stellenwerttafel</button>
+                        <button class="sub-tab-item" data-subtab="63-quiz">📝 Quiz</button>
+                    </div>
+
+                    <!-- Sub-tab content: Theory -->
+                    <div id="subtab-63-theory" class="subtab-content active">
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h3>1. Nachbarwerte bestimmen</h3>
+                                <p>Bei Dezimalzahlen ist es wichtig, die genauen Nachbarwerte auf verschiedenen Stellen zu kennen.</p>
+                                <div class="example-box">
+                                    <p><strong>Die Zahl ist 2.345:</strong></p>
+                                    <ul>
+                                        <li>Nachbar-Einer: <strong>2</strong> und <strong>3</strong></li>
+                                        <li>Nachbar-Zehntel: <strong>2.3</strong> und <strong>2.4</strong></li>
+                                        <li>Nachbar-Hundertstel: <strong>2.34</strong> und <strong>2.35</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>2. Multiplizieren & Dividieren mit 10, 100, 1000</h3>
+                                <p>Wenn du eine Zahl mit 10, 100 oder 1000 multiplizierst oder dividierst, verschieben sich alle Ziffern auf der Stellenwerttafel um entsprechende Stellen.</p>
+                                <ul>
+                                    <li><strong>× 10:</strong> Verschiebung um 1 Stelle nach links (Zahl wird grösser, Komma wandert nach rechts).</li>
+                                    <li><strong>÷ 10:</strong> Verschiebung um 1 Stelle nach rechts (Zahl wird kleiner, Komma wandert nach links).</li>
+                                    <li><strong>× 100:</strong> Verschiebung um 2 Stellen nach links.</li>
+                                    <li><strong>÷ 100:</strong> Verschiebung um 2 Stellen nach rechts.</li>
+                                </ul>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>3. Brüche & Dezimalzahlen umwandeln</h3>
+                                <p>Jeder Bruch kann als Dezimalzahl geschrieben werden und umgekehrt.</p>
+                                <ul>
+                                    <li>Brüche mit dem Nenner 10, 100, 1000 sind direkt Dezimalzahlen:
+                                        <ul>
+                                            <li><span class="frac">1</span>/<span class="frac">10</span> = 0.1 (ein Zehntel)</li>
+                                            <li><span class="frac">5</span>/<span class="frac">100</span> = 0.05 (fünf Hundertstel)</li>
+                                        </ul>
+                                    </li>
+                                    <li>Andere Brüche durch Erweitern auf 10, 100 bringen:
+                                        <ul>
+                                            <li><span class="frac">1</span>/<span class="frac">2</span> = (erweitert mit 5) = <span class="frac">5</span>/<span class="frac">10</span> = 0.5</li>
+                                            <li><span class="frac">3</span>/<span class="frac">4</span> = (erweitert mit 25) = <span class="frac">75</span>/<span class="frac">100</span> = 0.75</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="theory-card">
+                                <h3>4. Brüche vergleichen</h3>
+                                <p>Um Brüche mit ungleichen Nennern zu vergleichen (z. B. <span class="frac">2</span>/<span class="frac">3</span> und <span class="frac">3</span>/<span class="frac">4</span>), bringen wir sie durch Erweitern auf denselben Nenner (Hauptnenner):</p>
+                                <div class="example-box">
+                                    <p>Hauptnenner von 3 und 4 ist 12 (das kgV!).</p>
+                                    <ul>
+                                        <li><span class="frac">2</span>/<span class="frac">3</span> = <span class="frac">8</span>/<span class="frac">12</span></li>
+                                        <li><span class="frac">3</span>/<span class="frac">4</span> = <span class="frac">9</span>/<span class="frac">12</span></li>
+                                    </ul>
+                                    <p>Da 9/12 grösser ist als 8/12, ist <strong>3/4 > 2/3</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Zahlenstrahl -->
+                    <div id="subtab-63-zahlenstrahl" class="subtab-content">
+                        <div class="widget-layout">
+                            <div class="widget-controls">
+                                <h3>Interaktiver Zahlenstrahl</h3>
+                                <p>Bewege den Hauptschieberegler, um Werte zu suchen. Zoome in Abschnitte hinein, um Zehntel (0.1) und Hundertstel (0.01) genau anzuzeigen.</p>
+                                
+                                <div class="control-group">
+                                    <label for="zahlenstrahl-slider">Hauptwert (Einer): <span id="val-strahl-main" class="badge-val">1.0</span></label>
+                                    <input type="range" id="zahlenstrahl-slider" min="0" max="10" step="1" value="1" class="slider-control">
+                                </div>
+
+                                <div class="zoom-controls">
+                                    <h4>Zoom-Ausschnitt (Zehntel zwischen <span id="zoom-range-start">1</span> und <span id="zoom-range-end">2</span>):</h4>
+                                    <p>Klicke auf eine Dezimalzahl im Detailbereich unten, um Brüche zu sehen:</p>
+                                    <div class="math-display">
+                                        Ausgewählte Dezimalzahl: <span id="strahl-dec-val" class="badge-val font-mono">1.3</span>
+                                        = Bruch: <span id="strahl-frac-val" class="badge-val">13/10 (1 3/10)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget-visuals">
+                                <div class="visual-card">
+                                    <h4>Der Zahlenstrahl</h4>
+                                    <div class="canvas-container">
+                                        <canvas id="canvas-zahlenstrahl" width="400" height="240"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Stellenwerttafel -->
+                    <div id="subtab-63-stellenwert" class="subtab-content">
+                        <div class="stellenwert-widget">
+                            <h3>Die Stellenwerttafel</h3>
+                            <p>Füge Plättchen per Mausklick in die Spalten ein. Verschiebe alle Plättchen durch Multiplikation oder Division mit 10 oder 100 nach links oder rechts!</p>
+                            
+                            <div class="stellenwert-actions">
+                                <button id="btn-sw-mult10" class="btn-primary font-mono">&times; 10</button>
+                                <button id="btn-sw-div10" class="btn-primary font-mono">&divide; 10</button>
+                                <button id="btn-sw-mult100" class="btn-secondary font-mono">&times; 100</button>
+                                <button id="btn-sw-div100" class="btn-secondary font-mono">&divide; 100</button>
+                                <button id="btn-sw-clear" class="sieve-btn-reset">Tafel leeren</button>
+                            </div>
+
+                            <!-- Stellenwert Grid -->
+                            <div class="stellenwert-grid">
+                                <!-- Hunderter -->
+                                <div class="sw-column" data-col="H">
+                                    <div class="sw-header">Huderter (H)</div>
+                                    <div class="sw-counter" id="sw-count-H">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-H"></div>
+                                </div>
+
+                                <!-- Zehner -->
+                                <div class="sw-column" data-col="Z">
+                                    <div class="sw-header">Zehner (Z)</div>
+                                    <div class="sw-counter" id="sw-count-Z">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-Z"></div>
+                                </div>
+
+                                <!-- Einer -->
+                                <div class="sw-column sw-column-einer" data-col="E">
+                                    <div class="sw-header">Einer (E)</div>
+                                    <div class="sw-counter" id="sw-count-E">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-E"></div>
+                                </div>
+
+                                <!-- Divider (Comma) -->
+                                <div class="sw-comma-column">
+                                    <div class="sw-comma-dot">,</div>
+                                    <div class="sw-comma-text">Komma</div>
+                                </div>
+
+                                <!-- Zehntel -->
+                                <div class="sw-column sw-column-decimal" data-col="z">
+                                    <div class="sw-header">Zehntel (z)</div>
+                                    <div class="sw-counter" id="sw-count-z">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-z"></div>
+                                </div>
+
+                                <!-- Hundertstel -->
+                                <div class="sw-column sw-column-decimal" data-col="h">
+                                    <div class="sw-header">Hundertel (h)</div>
+                                    <div class="sw-counter" id="sw-count-h">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-h"></div>
+                                </div>
+
+                                <!-- Tausendstel -->
+                                <div class="sw-column sw-column-decimal" data-col="t">
+                                    <div class="sw-header">Tausendstel (t)</div>
+                                    <div class="sw-counter" id="sw-count-t">0</div>
+                                    <div class="sw-control-buttons">
+                                        <button class="btn-sw-add">+</button>
+                                        <button class="btn-sw-sub">-</button>
+                                    </div>
+                                    <div class="sw-dots-container" id="sw-dots-t"></div>
+                                </div>
+                            </div>
+
+                            <div class="sw-total-display">
+                                Dargestellte Zahl: <span id="sw-total-val" class="badge-val font-mono">0.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab content: Quiz 63 -->
+                    <div id="subtab-63-quiz" class="subtab-content">
+                        <div class="quiz-wrapper" id="quiz-63-container">
+                            <div class="quiz-intro">
+                                <h3>Dezimalzahlen-Quiz starten! 📊</h3>
+                                <p>Bist du fit im Vergleichen, Umwandeln und Rechnen mit Kommazahlen? 5 Fragen warten auf dich!</p>
+                                <button id="btn-start-quiz-63" class="btn-primary">Quiz starten</button>
+                            </div>
+                            <!-- Quiz active view (hidden by default) -->
+                            <div class="quiz-active" style="display: none;">
+                                <div class="quiz-progress-bar">
+                                    <div class="quiz-progress-fill" id="quiz-63-progress" style="width: 0%"></div>
+                                </div>
+                                <div class="quiz-question-box">
+                                    <span class="question-number" id="quiz-63-qnum">Frage 1 von 5</span>
+                                    <h4 id="quiz-63-qtext">Welcher Wert ist am grössten?</h4>
+                                    <div class="quiz-q-illustration" id="quiz-63-illustration"></div>
+                                    <div class="quiz-options" id="quiz-63-options">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Quiz result view (hidden by default) -->
+                            <div class="quiz-result" style="display: none;">
+                                <h3>Ergebnis</h3>
+                                <div class="stars-display" id="quiz-63-stars">⭐</div>
+                                <p id="quiz-63-result-text">Du hast 5 von 5 Fragen richtig beantwortet! Super gemacht!</p>
+                                <p>Erhaltene Punkte: <span id="quiz-63-points" class="badge-val">50</span></p>
+                                <button id="btn-restart-quiz-63" class="btn-secondary">Nochmals versuchen</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer-bar">
+            <p>&copy; 2026 Mathe-Fuchs 6. Erstellt für die 6. Klasse. Vollständig offline nutzbar.</p>
+        </footer>
+    </div>
+
+    <!-- Confetti canvas overlay -->
+    <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; display:none;"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
